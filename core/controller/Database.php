@@ -3,7 +3,7 @@
 		public static $db;
 		public static $con;
 		function __construct(){
-			$this->user="root";$this->pass="";$this->host="localhost";$this->ddbb="sd24shoes";
+			$this->user="root";$this->pass="";$this->host="localhost";$this->ddbb="syshoes";
 		}
 
 		function connect(){
