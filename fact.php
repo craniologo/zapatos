@@ -17,17 +17,13 @@
 	include "core/app/model/Serie_sizeData.php";
 	include "core/app/model/ProductData.php";
 	include "core/app/model/StockData.php";
-	include "core/app/model/ConfigurationData.php";
+	include "core/app/model/SettingData.php";
 
 	session_start();
 	if(isset($_SESSION["user_id"])){ Core::$user = UserData::getById($_SESSION["user_id"]); }
-	$title = ConfigurationData::getByPreffix("company_name")->val;
-	$address = ConfigurationData::getByPreffix("address")->val;
-	$phone = ConfigurationData::getByPreffix("phone")->val;
-	$image = ConfigurationData::getByPreffix("report_image")->val;
-	$note = ConfigurationData::getByPreffix("note")->val;
-	$imp = ConfigurationData::getByPreffix("imp-val")->val;
+	
 	$fact = SellData::getById($id);
+	$sett = SettingData::getByAdmin($fact->admin_id);
 	$stock = StockData::getById($fact->stock_id)->name;
 	$operations = OperationData::getAllProductsBySellId($id);
 	$client = PersonData::getById($fact->person_id);
@@ -36,7 +32,7 @@
 	$total = $fact->total;
 	$disc = $fact->discount;
 	$subt = $fact->total-$disc;
-	$igv = $subt*($imp/100);
+	$igv = $subt*($sett->tax/100);
 	$total_igv = $subt+$igv;
 
 	$fecha = $fact->created_at;
@@ -52,7 +48,7 @@
 	$uMargin = 15;
 
 	$pdf->SetFont('Arial','B',10);    //Letra Arial, negrita (Bold), tam. 20
-	$pdf->Image('storage/configuration/'.$image,160,15,30,20,'jpg');
+	$pdf->Image('storage/settings/'.$sett->image,160,15,30,20,'jpg');
 	$pdf->setXY($lMargin,$uMargin);
 	$pdf->Cell(50,5,'GUIA DE VENTA ',1,0,'C');
 	$pdf->Ln(5);
@@ -75,11 +71,11 @@
 	$pdf->Cell(45,5,'',0);
 	$pdf->Cell(45,5,'',0);
 	$pdf->SetFont('Arial','',10);
-	$pdf->Cell(45,5,$address,0);
+	$pdf->Cell(45,5,$sett->address,0);
 	$pdf->Ln(5);
 	$pdf->setX($lMargin);
 	$pdf->Cell(140,5,'Nombre: '.utf8_decode($client->name.' '.$client->lastname),0);
-	$pdf->Cell(45,5,$phone,0,0,'C');
+	$pdf->Cell(45,5,$sett->phone,0,0,'C');
 	$pdf->Ln(5);
 	$pdf->setX($lMargin);
 	$pdf->Cell(50,5,'RUC/DNI: '.$client->ruc,0);
@@ -142,13 +138,13 @@
 	$pdf->Cell(20,6,number_format($subt,2,".",","),1,0,'R');
 	$pdf->Ln(6);
 	$pdf->setX($lMargin);
-	$pdf->Cell(135,6,'Atendido por: '.$user->name." ".$user->lastname,0);
-	$pdf->Cell(25,6,'IGV'.$imp.'%',1);
+	$pdf->Cell(135,6,'Atendido por: '.utf8_decode($user->name)." ".utf8_decode($user->lastname),0);
+	$pdf->Cell(25,6,'IGV'.$sett->tax.'%',1);
 	$pdf->Cell(20,6,number_format($igv,2,".",","),1,0,'R');
 	$pdf->Ln(6);
 	$pdf->setX($lMargin);
 	$pdf->Cell(135,6,'',0);
-	$pdf->Cell(25,6,'Total a Pagar S/: ',1);
+	$pdf->Cell(25,6,'Total a Pagar '.$sett->coin,1);
 	$pdf->Cell(20,6,number_format($total_igv,2,".",","),1,0,'R');
 
 
@@ -161,7 +157,7 @@
 	$pdf->SetFont('Arial','',10);
 	$pdf->SetWidths(array(180));
 	$pdf->setX($lMargin);
-	$pdf->Row(array(utf8_decode($note)));
+	$pdf->Row(array(utf8_decode($sett->tax)));
 
 	$pdf->Output();
 ?>

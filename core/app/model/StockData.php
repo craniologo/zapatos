@@ -69,6 +69,20 @@
 			}
 		}
 
+		public static function getPrincipalByAdmin($id){
+	
+			if(Core::$user->kind==2 || Core::$user->kind==3){
+				$sql = "select * from ".self::$tablename." where id=".Core::$user->stock_id." and admin_id=$id";
+				$query = Executor::doit($sql);
+				return Model::one($query[0],new StockData());
+	
+			}else{
+				$sql = "select * from ".self::$tablename." where admin_id=$id and is_principal=1";
+				$query = Executor::doit($sql);
+				return Model::one($query[0],new StockData());
+			}
+		}
+
 		public static function getAll(){
 			$sql = "select * from ".self::$tablename;
 			$query = Executor::doit($sql);
@@ -76,7 +90,7 @@
 		}
 
 		public static function getAllByAdmin($id){
-			$sql = "select * from ".self::$tablename." where admin_id=$id order by is_principal asc";
+			$sql = "select * from ".self::$tablename." where admin_id=$id order by is_principal desc";
 			$query = Executor::doit($sql);
 			return Model::many($query[0],new StockData());
 		}

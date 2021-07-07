@@ -114,7 +114,7 @@
 					</div>
 				</div>
 			</div>
-			<form method="post" class="form-horizontal" id="processsell" action="index.php?view=processtraspase">
+			<form method="post" class="form-horizontal" id="traspase_process" action="index.php?action=traspase_process">
 				<h2>Resumen</h2>
 				<div class="form-group">
 					<?php $asset = SellData::getAllByLastTraspase();
@@ -127,7 +127,7 @@
 				    </div>
 				    <label for="inputEmail1" class="col-lg-1 control-label">Destino</label>
 				    <div class="col-lg-2">
-				    	<?php $clients = StockData::getAll(); ?>
+				    	<?php $clients = StockData::getAllByAdmin($u->admin_id); ?>
 					    <select name="stock_id" class="form-control" required>
 						    <option value="">-- NINGUNO --</option>
 						    <?php foreach($clients as $client):?>
@@ -144,11 +144,7 @@
 							<table class="table table-bordered">
 								<tr>
 									<td><p>Subtotal</p></td>
-									<td><p><b>S/ <?php echo number_format($total*(1 - ($iva_val/100) ),2,'.',','); ?></b></p></td>
-								</tr>
-								<tr>
-									<td><p><?php echo $iva_name." (".$iva_val."%) ";?></p></td>
-									<td><p><b>S/ <?php echo number_format($total*($iva_val/100),2,'.',','); ?></b></p></td>
+									<td><p><b>S/ <?php echo number_format($total,2,'.',','); ?></b></p></td>
 								</tr>
 								<tr>
 									<td><p>Total</p></td>

@@ -29,7 +29,7 @@
 									<th style="text-align: center;">Accesos</th>
 									<th style="text-align: center;">Us&nbsp;Máx</th>
 									<th style="text-align: center;">Serv&nbsp;Máx</th>
-									<th style="text-align: center;">Creado</th>
+									<th style="text-align: center;">Registro</th>
 									<th style="text-align: center; width:150px;">Acción</th>
 								</thead>
 								<?php for ($number=0; $number<1; $number++);
@@ -42,7 +42,7 @@
 					                    <?php }else{ ?>
 					                    	<img src="storage/profiles/default.jpg" style="width:50px; height: 50px; ">
 					                    <?php } ?></td>
-									<td><a href="../public.php?view=public&code=<?php echo $user->code; ?>" target="_blank"><?php echo $user->username; ?></a></td>
+									<td><?php echo $user->username; ?></td>
 									<td><a href="index.php?view=user_admin_resources&id=<?php echo $user->id; ?>"><?php echo $user->name." ".$user->lastname; ?></a></td>
 									<td><?php echo $user->email; ?></td>
 									<td style="text-align: right;"><?php $num = UserData::getAllByAdmin($user->id); echo count($num); ?>

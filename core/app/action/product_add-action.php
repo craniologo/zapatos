@@ -52,7 +52,7 @@
 
                 $op = new OperationData();
                 $op->product_id = $last;
-                $op->stock_id = StockData::getPrincipal()->id;
+                $op->stock_id = StockData::getPrincipalByAdmin($admin->admin_id)->id;
                 $op->operation_type_id=OperationTypeData::getByName("entrada")->id;
                 $op->q = $sizes[$i];
                 $op->size_id = $id[$i];

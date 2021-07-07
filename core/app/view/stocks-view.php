@@ -21,7 +21,7 @@
 								<thead>
 									<th style="text-align: center; width: 30px;">N°</th>
 									<th style="text-align: center;">Nombre</th>
-									<th style="text-align: center;">Direccion</th>
+									<th style="text-align: center;">Dirección</th>
 									<th style="text-align: center;">Telefono</th>
 									<th style="text-align: center;">Email</th>
 									<th style="text-align: center;">Principal</th>
@@ -33,7 +33,7 @@
 									$admin = $stock->getAdmin(); ?>
 									<tr>
 										<td style="text-align: center;"><?php echo $number; ?></td><?php $number++;?>
-										<td><a href="index.php?view=inventary&stock=<?php echo $stock->id;?>" class="btn btn-default btn-xs"><i class="fa fa-chevron-right"></i><?php echo $stock->name; ?></a></td>
+										<td><a href="index.php?view=inventary&stock=<?php echo $stock->id;?>" ><?php echo $stock->name; ?></a></td>
 										<td><?php echo $stock->address; ?></td>
 										<td style="text-align: center;"><?php echo $stock->phone; ?></td>
 										<td><?php echo $stock->email; ?></td>
@@ -49,7 +49,10 @@
 										<?php if($u->id==1): ?><td><?php echo $admin->name." ".$admin->lastname; ?></td><?php endif; ?>
 										<td style="text-align: center;">
 											<a href="index.php?view=stock_edit&id=<?php echo $stock->id;?>" class="btn btn-warning btn-xs"><i class="fa fa-edit"></i> Editar</a>
-											<a href="index.php?action=stock_del&id=<?php echo $stock->id;?>" onclick="return confirm('¿Está seguro de eliminar?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Eliminar</a></td>
+											<?php if($stock->is_principal!=1): ?>
+											<a href="index.php?action=stock_del&id=<?php echo $stock->id;?>" onclick="return confirm('¿Está seguro de eliminar?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Eliminar</a>
+											<?php endif; ?>
+											</td>
 									</tr>
 									<?php } ?>
 								</table>

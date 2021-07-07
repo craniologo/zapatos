@@ -34,8 +34,8 @@ class SellData {
 		return Executor::doit($sql);
 	}
 	public function add_traspase(){
-		$sql = "insert into ".self::$tablename." (ref_id,stock_to_id,stock_from_id,operation_type_id,iva,p_id,d_id,total,discount,user_id,created_at,created) ";
-		$sql .= "value ($this->ref_id,$this->stock_to_id,$this->stock_from_id,6,$this->iva,$this->p_id,$this->d_id,$this->total,$this->discount,$this->user_id,$this->created_at,$this->created)";
+		$sql = "insert into ".self::$tablename." (ref_id,stock_to_id,stock_from_id,operation_type_id,iva,p_id,d_id,total,discount,user_id,admin_id,created,created_at) ";
+		$sql .= "value ($this->ref_id,$this->stock_to_id,$this->stock_from_id,6,$this->iva,$this->p_id,$this->d_id,$this->total,$this->discount,$this->user_id,$this->admin_id,$this->created,$this->created_at)";
 		return Executor::doit($sql);
 	}
 

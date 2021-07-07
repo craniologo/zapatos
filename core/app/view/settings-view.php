@@ -46,7 +46,7 @@
                   <td style="text-align: right;"><?php echo $sett->coin; ?></td>
                   <?php if ($u->id==1): ?><td><?php echo $admin->name." ".$admin->lastname; ?></td><?php endif; ?>
                   <td style="text-align: center;">
-                    <a href="index.php?view=configuration_edit&id=<?php echo $sett->id;?>" class="btn btn-warning btn-xs"><i class="fa fa-edit"></i> Editar</a>
+                    <a href="index.php?view=setting_edit&id=<?php echo $sett->id;?>" class="btn btn-warning btn-xs"><i class="fa fa-edit"></i> Editar</a>
                   </td>
                 </tr>
                 <?php } ?>

@@ -69,32 +69,28 @@ class OperationData {
 		$sql = "select * from ".self::$tablename;
 		$query = Executor::doit($sql);
 		return Model::many($query[0],new OperationData());
-
 	}
 
 	public static function getAllByQ($id){
 		$sql = "select * from ".self::$tablename. " where q=$id";
 		$query = Executor::doit($sql);
 		return Model::many($query[0],new OperationData());
-
 	}
 
 	public static function getAllByProdId($prod_id){
 		$sql = "SELECT product_id, size, SUM(q) AS suma FROM operation where product_id=$prod_id AND operation_type_id=2 GROUP BY size";
 		$query = Executor::doit($sql);
 		return Model::many($query[0],new OperationData());
-
 	}
 
 	public static function getAllStockByProdId($prod_id){
 		$sql = "SELECT product_id, SUM(q) AS suma FROM operation where product_id=$prod_id AND operation_type_id=1";
 		$query = Executor::doit($sql);
 		return Model::many($query[0],new OperationData());
-
 	}
 
 	public static function getAllByDateOfficial($start,$end){
- $sql = "select * from ".self::$tablename." where date(created_at) >= \"$start\" and date(created_at) <= \"$end\" order by created_at desc";
+ 		$sql = "select * from ".self::$tablename." where date(created_at) >= \"$start\" and date(created_at) <= \"$end\" order by created_at desc";
 		if($start == $end){
 		 $sql = "select * from ".self::$tablename." where date(created_at) = \"$start\" order by created_at desc";
 		}
@@ -103,7 +99,7 @@ class OperationData {
 	}
 
 	public static function getAllByDateOfficialBP($product, $start,$end){
- $sql = "select * from ".self::$tablename." where date(created_at) >= \"$start\" and date(created_at) <= \"$end\" and product_id=$product order by created_at desc";
+ 		$sql = "select * from ".self::$tablename." where date(created_at) >= \"$start\" and date(created_at) <= \"$end\" and product_id=$product order by created_at desc";
 		if($start == $end){
 		 $sql = "select * from ".self::$tablename." where date(created_at) = \"$start\" order by created_at desc";
 		}
@@ -155,8 +151,21 @@ class OperationData {
 	public static function getQYesF($product_id){
 		$q=0;
 		$operations = self::getAllByProductId($product_id);
-		$input_id = OperationTypeData::getByName("entrada")->id;
-		$output_id = OperationTypeData::getByName("salida")->id;
+		$input_id = OperationTypeData::getByName("Entrada")->id;
+		$output_id = OperationTypeData::getByName("Salida")->id;
+		foreach($operations as $operation){
+				if($operation->operation_type_id==$input_id){ $q+=$operation->q; }
+				else if($operation->operation_type_id==$output_id){  $q+=(-$operation->q); }
+		}
+		// print_r($data);
+		return $q;
+	}
+
+	public static function getQYesFByStock($product_id,$st){
+		$q=0;
+		$operations = self::getAllByProductIdAndStock($product_id,$st);
+		$input_id = OperationTypeData::getByName("Entrada")->id;
+		$output_id = OperationTypeData::getByName("Salida")->id;
 		foreach($operations as $operation){
 				if($operation->operation_type_id==$input_id){ $q+=$operation->q; }
 				else if($operation->operation_type_id==$output_id){  $q+=(-$operation->q); }
@@ -177,12 +186,10 @@ class OperationData {
 		return Model::many($query[0],new OperationData());
 	}
 
-
 	public static function getAllByProductIdCutIdOficial($product_id,$cut_id){
 		$sql = "select * from ".self::$tablename." where product_id=$product_id and cut_id=$cut_id order by created_at desc";
 		return Model::many($query[0],new OperationData());
 	}
-
 
 	public static function getAllProductsBySellId($sell_id){
 		$sql = "select * from ".self::$tablename." where sell_id=$sell_id order by created_at desc";

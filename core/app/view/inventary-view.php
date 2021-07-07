@@ -4,10 +4,10 @@
     $u = UserData::getById($_SESSION["user_id"]); ?>
 	<div class="row">
 		<div class="col-md-12">
-			<h2><i class="glyphicon glyphicon-stats"></i> Inventario de Productos</h2>
+			<h2><i class="glyphicon glyphicon-stats"></i> Inventario de Productos la Sucursal <?php echo StockData::getById($_GET["stock"])->name; ?></h2>
 			<?php if($u->kind==1):?><a href="index.php?view=stocks" class="btn btn-default"><i class="fa fa-arrow-left"></i> Sucursales</a>
 			<br><br><?php endif; ?>
-			<?php $curr_products = ProductData::getAll(); ?>
+			<?php $curr_products = ProductData::getAllByAdmin($u->admin_id); ?>
 		</div>
 	</div>
 	<?php if(count($curr_products)>0){ ;?>
@@ -25,11 +25,10 @@
 							<th style="text-align: center;">Color</th>
 							<th style="text-align: center;">Talla</th>
 							<th style="text-align: center;">Stock</th>
-							<?php if($u->kind==1):?><th style="text-align: center;">Acción</th><?php endif; ?>
 						</thead>
 						<?php for($number=0; $number<1; $number++); //variable incremental
 						foreach($curr_products as $product):
-						$q=OperationData::getQYesF($product->id);?>
+						$q=OperationData::getQYesFByStock($product->id,$_GET["stock"]);?>
 
 						<tr class="<?php if($q<=$product->inventary_min/2){ echo "danger";}else if($q<=$product->inventary_min){ echo "warning";}?>">
 							<td style="text-align: center;"><?php echo $number; ?></td> <?php $number++; ?><!--var incremen-->
@@ -41,7 +40,6 @@
 							<td><?php $col = ColorData::getById($product->color_id); echo $col->name; ?></td>
 							<td><?php $size = Serie_sizeData::getById($product->size_id); echo "Talla ".$size->size; ?></td>
 							<td style="text-align: right;"><?php echo $q; ?></td>
-							<?php if($u->kind==1):?><td style="width:93px;"><a href="index.php?view=history&product_id=<?php echo $product->id; ?>" class="btn btn-xs btn-success"><i class="glyphicon glyphicon-time"></i> Historial</a></td><?php endif; ?>
 						</tr>
 						<?php endforeach;?>
 					</table>

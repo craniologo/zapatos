@@ -34,7 +34,7 @@ for($i=$sd;$i<=$ed;$i+=(60*60*24)){
         <h4>Administradores: <?php echo count(UserData::getAllAdmins()); ?></h4>
         <?php } ?>
         <h3>Empresa: <?php echo SettingData::getByAdmin($u->admin_id)->company; ?></h3>
-        <h4><i class="fa fa-building"></i> Sucursal Principal: <?php echo StockData::getPrincipal()->name;  ?></h4>
+        <h4><i class="fa fa-building"></i> Sucursal Principal: <?php echo StockData::getPrincipalByAdmin($u->admin_id)->name;  ?></h4>
         <a href="./?view=product_new" class="btn btn-default">Nuevo Producto</a>
         <a href="./?view=inventary&stock=<?php echo StockData::getPrincipal()->id; ?>" class="btn btn-default">Inventario Principal</a>
         <a href="./?view=spends" class="btn btn-default">Gastos Adicionales</a>
