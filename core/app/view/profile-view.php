@@ -33,9 +33,9 @@
         <div class="form-group">
           <label for="inputEmail1" class="col-lg-2 control-label">Usuario*</label>
           <div class="col-md-3">
-            <input type="text" name="username" value="<?php echo $user->username;?>" class="form-control" required id="username" placeholder="Nombre de usuario">
+            <input type="text" name="username" value="<?php echo $user->username;?>" class="form-control" required id="username" placeholder="Nombre de usuario" readonly>
           </div>
-          <label for="inputEmail1" class="col-lg-1 control-label">Correo Electrónico*</label>
+          <label for="inputEmail1" class="col-lg-1 control-label">Correo&nbsp;Electrónico*</label>
           <div class="col-md-3">
             <input type="text" name="email" value="<?php echo $user->email;?>" class="form-control" id="email" placeholder="Correo Electrónico">
           </div>

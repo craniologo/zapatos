@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>CRM | CALZADO</title>
+    <title>SAVI | SYSHOES</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- Bootstrap 3.3.4 -->
     <link href="plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -36,20 +36,17 @@
 
   </head>
 
-  <body class="<?php if(isset($_SESSION["user_id"]) || isset($_SESSION["client_id"])):?>  skin-blue-light sidebar-mini <?php else:?>login-page<?php endif; ?>"
+  <body class="<?php if(isset($_SESSION["user_id"]) || isset($_SESSION["client_id"])):?>  skin-blue-light sidebar-collapse sidebar-mini <?php else:?>login-page<?php endif; ?>"
     style="background-image: url('storage/background.jpg'); background-size: cover;">
     <div class="wrapper">
-      <!-- Main Header -->
       <?php if(isset($_SESSION["user_id"]) || isset($_SESSION["client_id"])):?>
-      <header class="main-header">
-        <!-- Logo -->
-        <a href="./" class="logo">
+      <header class="main-header"><!-- Main Header -->
+        <a href="./" class="logo"><!-- Logo -->
           <!-- mini logo for sidebar mini 50x50 pixels -->
           <span class="logo-mini"><b>S</b>C</span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg">SAVI<b>&nbsp;CALZADO</b></span>
+          <span class="logo-lg">SAVI<b>&nbsp;SYSHOES</b></span>
         </a>
-
         <!-- Header Navbar -->
         <nav class="navbar navbar-static-top" role="navigation">
           <!-- Sidebar toggle button-->
@@ -60,46 +57,61 @@
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
 
-          <?php if(isset($_SESSION["user_id"])):
-          $msgs = MessageData::getUnreadedByUserId($_SESSION["user_id"]); ?>
-          <li class="dropdown messages-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="fa fa-envelope-o"></i>
-              <span class="label label-success"><?php echo count($msgs);?></span>
-            </a>
-            <ul class="dropdown-menu">
-              <li class="header">Tienes <?php echo count($msgs);?> mensajes nuevos</li>
-              <li>
-                <!-- inner menu: contains the actual data -->
-                <ul class="menu">
-                <?php foreach($msgs as $i):?>
-                  <li><!-- start message -->
-                    <a href="./?view=messages&opt=open&code=<?php echo $i->code;?>">
-                      <h4>
-                    <?php if($i->user_from!=$_SESSION["user_id"]):?>
-                    <?php $u = $i->getFrom(); echo $u->name." ".$u->lastname;?>
-                    <?php elseif($i->user_to!=$_SESSION["user_id"]):?>
-                    <?php $u = $i->getTo(); echo $u->name." ".$u->lastname;?>
-                  <?php endif; ?>
-                        <small><i class="fa fa-clock-o"></i> 5 mins</small>
+              <?php if(isset($_SESSION["user_id"])):
+              $msgs = MessageData::getUnreadedByUserId($_SESSION["user_id"]); ?>
 
-                      </h4>
-                      <p><?php echo $i->message; ?></p>
-                    </a>
+              <li class="dropdown notifications-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+                  <input type="hidden" name="cmd" value="_s-xclick">
+                  <input type="hidden" name="hosted_button_id" value="A9SBAHZY46A48">
+                  <input type="image" src="https://www.paypalobjects.com/es_ES/ES/i/btn/btn_subscribe_SM.gif" border="0" name="submit" alt="PayPal, la forma rápida y segura de pagar en Internet.">
+                  <img alt="" border="0" src="https://www.paypalobjects.com/es_XC/i/scr/pixel.gif" width="1" height="1">
+                </form></a>
+              </li>
+                  
+              <li class="dropdown notifications-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <i class="fa fa-warning"></i>
+                  <span class="label label-warning">?</span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li class="header">Guías y Manuales</li>
+                  <!--<li class="footer"><a href="https://www.sergestec.com/download/manual_sistema_syshoes.pdf" target="_blank"><i class="fa fa-book"></i> Manual de usuario</a></li>-->
+                  <li><a>Muy pronto aquí!!!</a></li>
+                  <li class="header">Sugerencias y Mejoras del Sistema</li>
+                  <li class="footer"><a href="http://soporte.sergestec.com" target="_blank"><i class="fa fa-ticket"></i> Ir al sistema de tickets</a></li>
+                  <li class="header">Tienes <?php echo count($msgs);?> mensajes nuevos</li>
+                  <li>
+                    <!-- inner menu: contains the actual data -->
+                    <ul class="menu">
+                    <?php foreach($msgs as $i):?>
+                      <li><!-- start message -->
+                        <a href="./?view=messages&opt=open&code=<?php echo $i->code;?>">
+                          <h4>
+                        <?php if($i->user_from!=$_SESSION["user_id"]):?>
+                        <?php $u = $i->getFrom(); echo $u->name." ".$u->lastname;?>
+                        <?php elseif($i->user_to!=$_SESSION["user_id"]):?>
+                        <?php $u = $i->getTo(); echo $u->name." ".$u->lastname;?>
+                      <?php endif; ?>
+                            <small><i class="fa fa-clock-o"></i> 5 mins</small>
+
+                          </h4>
+                          <p><?php echo $i->message; ?></p>
+                        </a>
+                      </li>
+                    <?php endforeach; ?>
+
+                    </ul>
                   </li>
-                <?php endforeach; ?>
-
+                  <li class="footer"><a href="./?view=messages&opt=all">Todos los mensajes</a></li>
                 </ul>
               </li>
-              <li class="footer"><a href="./?view=messages&opt=all">Todos los mensajes</a></li>
-            </ul>
-          </li>
-          <?php endif;?>
-              <!-- User Account Menu -->
-              <li class="dropdown user user-menu">
+              <?php endif;?>
+              
+              <li class="dropdown user user-menu"><!-- User Account Menu -->
                 <!-- Menu Toggle Button -->
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <!-- The user image in the navbar-->
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><!-- The user image in the navbar-->                  
                   <!-- hidden-xs hides the username on small devices so only the image appears. -->
                   <span class=""><?php if(isset($_SESSION["user_id"]) ){ echo UserData::getById($_SESSION["user_id"])->name;
                   if(Core::$user->kind==1){ echo " (Admin)"; }
@@ -108,26 +120,27 @@
                   }else if (isset($_SESSION["client_id"])){ echo PersonData::getById($_SESSION["client_id"])->name." (Cliente)" ;}?> <b class="caret"></b> </span>
                 </a>
                 <ul class="dropdown-menu">
-              <li class="user-header">
-                <?php if(Core::$user->image!=""){
-                $url = "storage/profiles/".Core::$user->image;
-                if(file_exists($url)){
-                  echo "<img src='$url' class='img-circle'>";
-                } } ?>
-                <p>
-                <?php echo Core::$user->name." ".Core::$user->lastname;?>
-                </p>
-              </li>                  <!-- The user image in the menu -->
-                  <!-- Menu Footer-->
-                  <li class="user-footer">
+                  <li class="user-header">
+                    <?php if(Core::$user->image!=""){
+                      $url = "storage/profiles/".Core::$user->image;
+                      if(file_exists($url)){
+                        echo "<img src='$url' class='img-circle'>";
+                      }
+                    }else{
+                      echo "<img src='storage/profiles/default.jpg' class='img-circle'>";
+                    }  ?>
+                    <p>
+                    <?php echo Core::$user->name." ".Core::$user->lastname;?>
+                    </p>
+                  </li><!-- The user image in the menu -->
+                  <li class="user-footer"><!-- Menu Footer-->
                     <div class="pull-right">
                       <a href="./?view=profile" class="btn btn-default btn-flat">Mi Perfil</a>
                       <a href="./logout.php" class="btn btn-default btn-flat">Salir</a>
                     </div>
                   </li>
                 </ul>
-              </li>
-              <!-- Control Sidebar Toggle Button -->
+              </li><!-- Control Sidebar Toggle Button -->
             </ul>
           </div>
         </nav>
@@ -141,25 +154,31 @@
           <ul class="sidebar-menu">
             <li class="header">ADMINISTRACION</li>
             <?php if(isset($_SESSION["user_id"])):?>
-            <?php if(Core::$user->kind==2):?>
-            <li><a href="./index.php?view=alerts"><i class='fa fa-bell-o'></i> <span>Alertas</span></a></li>
-            <li><a href="./index.php?view=sell"><i class='fa fa-shopping-cart'></i> <span>Vender</span></a></li>
-            <li><a href="./index.php?view=sells"><i class='fa fa-usd'></i> <span>Ventas</span></a></li>
-            <li><a href="index.php?view=clients"><i class="fa fa-users"></i> <span>Clientes</span></a></li>
-            <li><a href="index.php?view=spends"><i class="fa fa-tags"></i> <span>Gastos</span></a></li>
-            <li><a href="./?view=inventary&stock=<?php echo StockData::getPrincipal()->id;?>"><i class='fa fa-area-chart'></i> <span>Inventario</span></a></li>
-            <?php endif; ?>
             <?php if(Core::$user->kind==1):?>
             <li><a href="./index.php?view=home"><i class='fa fa-dashboard'></i> <span>Resumen</span></a></li>
-            <li><a href="./index.php?view=sell"><i class='fa fa-shopping-cart'></i> <span>Vender</span></a></li>
+            <?php endif; ?>
             <li><a href="./index.php?view=alerts"><i class='fa fa-bell-o'></i> <span>Alertas</span></a></li>
+            <li><a href="./index.php?view=sell"><i class='fa fa-shopping-cart'></i> <span>Vender</span></a></li>
+            <?php if(Core::$user->kind==2 || Core::$user->kind==3):?>
+            <li><a href="./index.php?view=sells"><i class='fa fa-usd'></i> <span>Ventas</span></a></li>
+            <li><a href="index.php?view=spends"><i class="fa fa-coffee"></i> <span>Gastos</span></a></li>
+            <li><a href="index.php?view=inventaries"><i class="fa fa-cubes"></i> <span>Inventario Global</span></a></li>
+            <li><a href="index.php?view=clients"><i class="fa fa-male"></i> <span>Clientes</span></a></li>
+            <?php endif; ?>
+            <?php if(Core::$user->kind==3):?>
+            <li><a href="index.php?view=providers"><i class="fa fa-truck"></i> <span>Proveedores</span></a></li>
+            <li><a href="index.php?view=box"><i class="fa fa-archive"></i> <span>Caja</span></a></li>
+            <li><a href="index.php?view=res"><i class="fa fa-refresh"></i> <span>Reabastecimientos</span></a></li>
+            <li><a href="./?view=trasps"><i class="fa fa-exchange"></i> <span>Traspasos</span></a></li>
+            <?php endif; ?>
+            <?php if(Core::$user->kind==1):?>
             <li class="treeview">
               <a href="#"><i class='fa fa-th-list'></i> <span>Catálogos</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
                 <li><a href="./index.php?view=serie_size"><i class='fa fa-list-ol'></i> <span>Series</span></a></li>
-                <li><a href="./index.php?view=details"><i class='fa fa-star-half-o'></i> <span>Características</span></a></li>
-                <li><a href="./index.php?view=products"><i class='fa fa-glass'></i> <span>Productos</span></a></li>
-                <li><a href="index.php?view=clients"><i class="fa fa-users"></i> <span>Clientes</span></a></li>
+                <li><a href="./index.php?view=details"><i class='fa fa-star-half-o'></i> <span>Marcas y Colores</span></a></li>
+                <li><a href="./index.php?view=products"><i class='fa fa-apple'></i> <span>Productos</span></a></li>
+                <li><a href="index.php?view=clients"><i class="fa fa-male"></i> <span>Clientes</span></a></li>
                 <li><a href="index.php?view=providers"><i class="fa fa-truck"></i> <span>Proveedores</span></a></li>
               </ul>
             </li>
@@ -168,16 +187,15 @@
               <ul class="treeview-menu">
                 <li><a href="./index.php?view=sells"><i class='fa fa-usd'></i> <span>Ventas</span></a></li>
                 <li><a href="index.php?view=box"><i class="fa fa-archive"></i> <span>Caja</span></a></li>
-                <li><a href="index.php?view=boxhistory"><i class="fa fa-cut"></i> <span>Cortes/Caja</span></a></li>
                 <li><a href="index.php?view=spends"><i class="fa fa-coffee"></i> <span>Gastos</span></a></li>
                 <li><a href="index.php?view=balance"><i class="fa fa-area-chart"></i> <span>Balance</span></a></li>
-                <li><a href="index.php?view=gain"><i class="fa fa-usd"></i> <span>Liquidez</span></a></li>
+                <li><a href="index.php?view=gain"><i class="fa fa-money"></i> <span>Liquidez</span></a></li>
               </ul>
             </li>
             <li class="treeview">
-              <a href="#"><i class='fa fa-bar-chart-o'></i> <span>Reportes</span> <i class="fa fa-angle-left pull-right"></i></a>
+              <a href="#"><i class='fa fa-bar-chart-o'></i> <span>Gráficas</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
-                <li><a href="./index.php?view=analytics"><i class='fa fa-dashboard'></i> <span>Analytics</span></a></li>
+                <li><a href="./index.php?view=analytics"><i class='fa fa-bar-chart-o'></i> <span>Analytics</span></a></li>
                 <!-- <li><a href="index.php?view=reports"><i class="fa fa-tags"></i> <span>Marcas</span></a></li>
                 <li><a href="./index.php?view=sellreports"><i class="fa fa-list-ol"></i> <span>Ventas</span></a></li>
                 <li><a href="./index.php?view=sell_user"><i class="fa fa-users"></i> <span>Usuarios</span></a></li>
@@ -187,7 +205,7 @@
             <li class="treeview">
               <a href="#"><i class='fa fa-cube'></i> <span>Stock</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
-            <li><a href="index.php?view=inventaries"><i class="fa fa-cubes"></i> <span>Inventario Global</span></a></li>
+                <li><a href="index.php?view=inventaries"><i class="fa fa-cubes"></i> <span>Inventario Global</span></a></li>
                 <li><a href="index.php?view=res"><i class="fa fa-refresh"></i> <span>Reabastecimientos</span></a></li>
                 <li><a href="index.php?view=stocks"><i class="fa fa-building"></i> <span>Sucursales</span></a></li>
                 <li><a href="./?view=readjustments"><i class="fa fa-adjust"></i> <span>Reajustes</span></a></li>
@@ -235,7 +253,7 @@
         </div><!-- /.login-logo -->
         <div class="modal-content">
           <div class="modal-header">
-          <center><h1>SISTEMA DE VENTAS MULTIUSO</h1></center><br>
+          <center><h1>SISTEMA DE VENTAS DE CALZADO</h1></center><br>
             <h4 class="modal-title" style="text-align: center;">Ingresa tu nueva contraseña</h4>
           </div>
           <div class="login-box-body">
@@ -296,11 +314,11 @@
         <center><h1>SISTEMA DE VENTA DE CALZADO</h1></center>
         <form action="./?action=processlogin" method="post">
           <div class="form-group has-feedback">
-            <input type="text" name="username" required class="form-control" value="admin" placeholder="Escriba su Usuario o Correo Electrónico" />
+            <input type="text" name="username" required class="form-control" value="eabanto2@hotmail.com" placeholder="Escriba su Usuario o Correo Electrónico" />
             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
           </div>
           <div class="form-group has-feedback">
-            <input type="password" name="password" required class="form-control" value="admin" />
+            <input type="password" name="password" required class="form-control" value="admin" placeholder="Escriba su contraseña" />
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
           </div>
           <div class="row">

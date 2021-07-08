@@ -4,7 +4,8 @@
   	$u = UserData::getById($_SESSION["user_id"]); ?>
 	<div class="row">
 		<div class="col-md-12">
-			<h2><i class="glyphicon glyphicon-alert"></i> Alertas de Stock</h2>
+			<h2><i class="fa fa-bell-o"></i> Alertas de Stock</h2>
+			<p>Aquí se visulizan las alertas cuando los productos alcanzan el mínimo de stock.</p>
 			<div class="clearfix"></div>
 			<?php $found=false;
 			$products = ProductData::getAll();

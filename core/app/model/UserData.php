@@ -7,6 +7,7 @@
 		public function __construct(){
 			$this->name = "";
 			$this->lastname = "";
+			$this->username = "";
 			$this->email = "";
 			$this->password = "";
 			$this->image = "";
@@ -28,6 +29,12 @@
 			Executor::doit($sql);
 		}
 
+		public function add_new(){
+			$sql = "insert into user (name,lastname,username,email,password,image,kind,stock_id,admin_id,counter,created_at) ";
+			$sql .= "value (\"$this->name\",\"$this->lastname\",\"$this->username\",\"$this->email\",\"$this->password\",\"$this->image\",\"$this->kind\",\"$this->stock_id\",\"$this->admin_id\",1,$this->created_at)";
+			Executor::doit($sql);
+		}
+
 		public static function delById($id){
 			$sql = "delete from ".self::$tablename." where id=$id";
 			Executor::doit($sql);
@@ -39,7 +46,17 @@
 
 	// partiendo de que ya tenemos creado un objecto UserData previamente utilizamos el contexto
 		public function update(){
-			$sql = "update ".self::$tablename." set name=\"$this->name\",email=\"$this->email\",username=\"$this->username\",lastname=\"$this->lastname\",image=\"$this->image\",status=\"$this->status\",stock_id=\"$this->stock_id\" where id=$this->id";
+			$sql = "update ".self::$tablename." set name=\"$this->name\",lastname=\"$this->lastname\",username=\"$this->username\",email=\"$this->email\",image=\"$this->image\",status=\"$this->status\" where id=$this->id";
+			Executor::doit($sql);
+		}
+
+		public function update_profile(){
+			$sql = "update ".self::$tablename." set name=\"$this->name\",lastname=\"$this->lastname\",username=\"$this->username\",email=\"$this->email\",image=\"$this->image\" where id=$this->id";
+			Executor::doit($sql);
+		}
+
+		public function update_kind_stock(){
+			$sql = "update ".self::$tablename." set name=\"$this->name\",lastname=\"$this->lastname\",username=\"$this->username\",email=\"$this->email\",image=\"$this->image\",status=\"$this->status\",kind=\"$this->kind\",stock_id=\"$this->stock_id\" where id=$this->id";
 			Executor::doit($sql);
 		}
 
@@ -65,7 +82,7 @@
 		}
 
 		public static function getAllbyAdmin($id){
-			$sql = "select * from ".self::$tablename." where admin_id=$id order by created_at desc";		
+			$sql = "select * from ".self::$tablename." where admin_id=$id order by created_at asc";		
 			$query = Executor::doit($sql);
 			return Model::many($query[0],new UserData());
 		}

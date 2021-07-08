@@ -151,7 +151,7 @@ class SellData {
 		return Model::many($query[0],new SellData());
 	}
 
-	public static function getSellsByUserId($id){
+	public static function getSellsByUser($id){
 		$sql = "select * from ".self::$tablename." where operation_type_id=2 and is_draft=0 and user_id=$id order by created_at desc";
 		$query = Executor::doit($sql);
 		return Model::many($query[0],new SellData());
@@ -376,13 +376,13 @@ class SellData {
 	}
 
 	public static function getGroupByDateOp($start,$end,$op){
-  		$sql = "select id,sum(total) as tot,discount,sum(total-discount) as t,count(*) as c from ".self::$tablename." where date(created_at) >= \"$start\" and date(created_at) <= \"$end\" and operation_type_id=$op";
+  		$sql = "select id,sum(total) as tot,discount,sum(total) as t,count(*) as c from ".self::$tablename." where date(created_at) >= \"$start\" and date(created_at) <= \"$end\" and operation_type_id=$op";
 		$query = Executor::doit($sql);
 		return Model::many($query[0],new SellData());
 	}
 
 	public static function getGroupByDateOpByAdmin($start,$end,$op,$id){
-  		$sql = "select id,sum(total) as tot,discount,sum(total-discount) as t,count(*) as c from ".self::$tablename." where date(created_at) >= \"$start\" and date(created_at) <= \"$end\" and operation_type_id=$op and admin_id=$id";
+  		$sql = "select id,sum(total) as tot,discount,sum(total) as t,count(*) as c from ".self::$tablename." where date(created_at) >= \"$start\" and date(created_at) <= \"$end\" and operation_type_id=$op and admin_id=$id";
 		$query = Executor::doit($sql);
 		return Model::many($query[0],new SellData());
 	}

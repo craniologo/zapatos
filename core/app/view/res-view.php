@@ -5,6 +5,11 @@
 	<div class="row">
 		<div class="col-md-12">
 			<h2><i class='fa fa-refresh'></i> Lista de Reabastecimientos</h2>
+	        <ol class="breadcrumb">
+	          <li><a href="./?view=home"><i class="fa fa-dashboard"></i> Inicio</a></li>
+	          <li><i class="fa fa-cube"></i> Stock</li>
+	          <li class="active"><i class="fa fa-refresh"></i> Reabastecimientos</li>
+	        </ol>
 			<a href="index.php?view=re" class="btn btn-default"><i class='fa fa-refresh'></i> Reabastecer</a>
 			<br><br>
 			<?php if($u->id==1){

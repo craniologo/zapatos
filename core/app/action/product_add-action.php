@@ -59,6 +59,7 @@
                 $op->price_in = "NULL";
                 $op->price_out = "NULL";
                 $op->sell_id="NULL";
+                $op->admin_id = $admin->admin_id;
                 $op->add();
 
                 $product = ProductData::getById($last);

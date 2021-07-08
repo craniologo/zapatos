@@ -6,6 +6,12 @@
 	<div class="row">
 		<div class="col-md-12">
 			<h2><i class="fa fa-area-chart"></i> Balance (Ventas - Gastos = Ganancia)</h2>
+			<p>El Balance es el resultado de las operaciones de ingreso por Ventas menos los egresos por Compras y gastos.</p>
+		    <ol class="breadcrumb">
+		      <li><a href="./?view=home"><i class="fa fa-dashboard"></i> Inicio</a></li>
+		      <li><i class="fa fa-money"></i> Finanzas</li>
+		      <li class="active"><i class="fa fa-area-chart"></i> Balance</li>
+		    </ol>
 			<form>
 				<input type="hidden" name="view" value="balance">
 				<div class="row">

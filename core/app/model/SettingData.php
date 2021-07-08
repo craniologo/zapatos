@@ -10,20 +10,21 @@
 			$this->phone = "";
 			$this->tax = "";
 			$this->coin = "";
+			$this->note = "";
 			$this->admin_id = "";
 		}
 
 		public function getAdmin(){ return UserData::getById($this->admin_id);}
 
 		public function add(){
-			$sql = "insert into ".self::$tablename." (company,ruc,address,phone,tax,coin,admin_id) ";
-			$sql .= "value (\"$this->company\",\"$this->ruc\",\"$this->address\",\"$this->phone\",\"$this->tax\",\"$this->coin\",$this->admin_id)";
+			$sql = "insert into ".self::$tablename." (company,ruc,address,phone,tax,coin,note,admin_id) ";
+			$sql .= "value (\"$this->company\",\"$this->ruc\",\"$this->address\",\"$this->phone\",\"$this->tax\",\"$this->coin\",\"$this->note\",$this->admin_id)";
 			Executor::doit($sql);
 		}
 
 		public function add_with_image(){
-			$sql = "insert into ".self::$tablename." (image,company,ruc,address,phone,admin_id) ";
-			$sql .= "value (\"$this->image\",\"$this->company\",\"$this->ruc\",\"$this->address\",\"$this->phone\",\"$this->tax\",$this->admin_id)";
+			$sql = "insert into ".self::$tablename." (image,company,ruc,address,phone,note,admin_id) ";
+			$sql .= "value (\"$this->image\",\"$this->company\",\"$this->ruc\",\"$this->address\",\"$this->phone\",\"$this->tax\",\"$this->note\",$this->admin_id)";
 			Executor::doit($sql);
 		}
 
@@ -38,7 +39,7 @@
 
 	// partiendo de que ya tenemos creado un objecto SettingData previamente utilizamos el contexto
 		public function update(){
-			$sql = "update ".self::$tablename." set company=\"$this->company\",ruc=\"$this->ruc\",address=\"$this->address\",phone=\"$this->phone\",tax=\"$this->tax\",coin=\"$this->coin\" where id=$this->id";
+			$sql = "update ".self::$tablename." set company=\"$this->company\",ruc=\"$this->ruc\",address=\"$this->address\",phone=\"$this->phone\",tax=\"$this->tax\",coin=\"$this->coin\",note=\"$this->note\" where id=$this->id";
 			Executor::doit($sql);
 		}
 

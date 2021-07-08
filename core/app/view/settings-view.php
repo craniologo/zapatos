@@ -4,8 +4,13 @@
   $u = UserData::getById($_SESSION["user_id"]); ?>
   <div class="row">
     <div class="col-md-12">
-    <h2><i class="fa fa-cog"></i> Configuración</h2>
+    <h2><i class="fa fa-cogs"></i> Configuración</h2>
       <p>Configure aquí la información de la empresa, esta será visualizada en la parte superior del ticket.</p>
+      <ol class="breadcrumb">
+        <li><a href="./?view=home"><i class="fa fa-dashboard"></i> Inicio</a></li>
+        <li><i class="fa fa-cog"></i> Administración</li>
+        <li class="active"><i class="fa fa-cogs"></i> Configuración</li>
+      </ol>
       <?php if($u->id==1){
         $settings = SettingData::getAll();
       }else{
@@ -19,13 +24,14 @@
               <table class="table table-bordered <?php if($u->id==1){ echo 'datatable'; } ?> table-hover">
                 <thead>
                   <th style="text-align: center; width: 30px;">N°</th>
-                  <th style="text-align: center; width: 200px;">Logo</th>
+                  <th style="text-align: center; width: 100px;">Logo</th>
                   <th style="text-align: center;">Nombre</th>
-                  <th style="text-align: center;">RUC</th>
+                  <th style="text-align: center;">RUC/Cédula</th>
                   <th style="text-align: center;">Dirección</th>
                   <th style="text-align: center;">Teléfono</th>
                   <th style="text-align: center;">Impuesto</th>
                   <th style="text-align: center;">Moneda</th>
+                  <th style="text-align: center;">Nota</th>
                   <?php if ($u->id==1): ?><th style="text-align: center;">Administrador</th><?php endif; ?>
                   <th style="text-align: center; width:80px;">Acción</th>
                 </thead>
@@ -44,6 +50,7 @@
                   <td style="text-align: right;"><?php echo $sett->phone; ?></td>
                   <td style="text-align: right;"><?php echo $sett->tax." %"; ?></td>
                   <td style="text-align: right;"><?php echo $sett->coin; ?></td>
+                  <td><?php echo $sett->note; ?></td>
                   <?php if ($u->id==1): ?><td><?php echo $admin->name." ".$admin->lastname; ?></td><?php endif; ?>
                   <td style="text-align: center;">
                     <a href="index.php?view=setting_edit&id=<?php echo $sett->id;?>" class="btn btn-warning btn-xs"><i class="fa fa-edit"></i> Editar</a>

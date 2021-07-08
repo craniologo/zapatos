@@ -5,15 +5,18 @@
 	<div class="row">
 		<div class="col-md-12">
 			<h2><i class="fa fa-apple"></i> Todos los Productos</h2>
+		    <ol class="breadcrumb">
+		      <li><a href="./?view=home"><i class="fa fa-dashboard"></i> Inicio</a></li>
+		      <li><i class="fa fa-list-ul"></i> Catálogos</li>
+		      <li class="active"><i class="fa fa-apple"></i> Lista de Productos</li>
+		    </ol>
 			<p>Aquí están registrados todos los productos de la empresa.</p>
             <a href="index.php?view=product_new" class="col-md-1 btn btn-default"><i class='fa fa-apple'></i> Nuevo Producto</a>
 			<br><br>
 			<?php if($u->id==1) {
 				$prods = ProductData::getAll();
-			}else if($u->id==$u->admin_id) {
-				$prods = ProductData::getAllByAdmin($u->admin_id);
 			}else{
-				$prods = ProductData::getAllByUser($u->id);
+				$prods = ProductData::getAllByAdmin($u->admin_id);
 			}
 			if(count($prods)>0){ ?>
 			<div class="box">
@@ -24,7 +27,7 @@
 								<thead>
 									<th style="text-align: center; width: 30px;">N°</th>
 									<th style="text-align: center;">Código</th>
-									<th style="text-align: center; width: 80px;">Imágen</th>
+									<th style="text-align: center; width: 50px;">Imágen</th>
 									<th style="text-align: center;">Modelo</th>
 									<th style="text-align: center;">Marca</th>
 									<th style="text-align: center;">Género</th>
@@ -34,15 +37,17 @@
 									<th style="text-align: center; width: 30px;">Stock</th>
 									<th style="text-align: center;">Costo</th>
 									<th style="text-align: center;">Venta</th>
+									<?php if($u->id==1): ?><th style="text-align: center;">Administrador</th><?php endif; ?>
 									<th style="text-align: center;  width:150px;">Acción</th>
 								</thead>
 								<?php for ($number=0; $number<1; $number++);?>
 								<?php foreach($prods as $prd){
-								$q=OperationData::getQYesF($prd->id); ?>
+								$q=OperationData::getQYesF($prd->id);
+									$admin = $prd->getAdmin(); ?>
 								<tr>
 									<td style="text-align: center; width:30px;"><?php echo $number; ?></td><?php $number++;?>
 									<td style="text-align: right;"><?php echo $prd->barcode; ?></td>
-									<td><?php if($prd->image!=""):?><img src="storage/products/<?php echo $prd->image;?>" style="width:64px;"><?php endif;?></td>
+									<td style="text-align:center;"><?php if($prd->image!=""):?><img src="storage/products/<?php echo $prd->image;?>" style="width:50px; height:50px;"><?php endif;?></td>
 									<td><?php echo $prd->modelo; ?></td>
 									<td><?php $brand = BrandData::getById($prd->brand_id); echo $brand->name; ?></td>
 									<td><?php echo $prd->sex; ?></td>
@@ -52,6 +57,7 @@
 									<td style="text-align: right;"><?php echo $q; ?></td>
 									<td style="text-align: right;">S/ <?php echo number_format($prd->price_in,2); ?></td>
 									<td style="text-align: right;">S/ <?php echo number_format($prd->price_out,2); ?></td>
+									<?php if($u->id==1): ?><td><?php echo $admin->name." ".$admin->lastname; ?></td><?php endif; ?>
 									<td style="text-align: center;">
 										<a href="barc.php?id=<?php echo $prd->id; ?>" class="btn btn-default btn-xs" target="_blank" title="Etiquetas"><i class="fa fa-barcode"></i></a>
 										<a href="index.php?view=product_edit&id=<?php echo $prd->id;?>" class="btn btn-warning btn-xs" title="Editar"><i class="fa fa-edit"></i></a>

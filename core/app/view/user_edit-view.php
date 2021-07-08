@@ -10,17 +10,18 @@
   	<h2><i class="fa fa-user"></i> Editar <?php echo $t_user; ?></h2>
   	 <a href="index.php?view=users" class="btn btn-default"><i class="fa fa-arrow-left"></i> Regresar</a>
         <br><br>
-  		<form class="form-horizontal" method="post" id="addproduct" enctype="multipart/form-data" action="index.php?action=user_update" role="form">
+  		<form class="form-horizontal" method="post" id="user_update" enctype="multipart/form-data" action="index.php?action=user_update" role="form">
         <div class="form-group">
-          <label for="inputEmail1" class="col-lg-2 control-label">Imagen (160x160)</label>
+          <label for="inputEmail1" class="col-lg-2 control-label">Foto JPG (400x400px)</label>
           <div class="col-md-6">
             <?php if($user->image!=""){
               $url = "storage/profiles/".$user->image;
               if(file_exists($url)){
-                echo "<img src='$url' style='width:80px;'>";
+                echo "<img src='$url' style='width:300px; height:300px;'>";
               }
-            }
-            ?>
+            }else{
+              echo "<img src='storage/profiles/default.jpg' class='img-responsive' style='width: 300px; height: 300px;' >";
+            } ?>
             <br><br>
             <input type="file" name="image" id="image" placeholder="">
           </div>
@@ -38,9 +39,9 @@
         <div class="form-group">
           <label for="inputEmail1" class="col-lg-2 control-label">Usuario*</label>
           <div class="col-md-3">
-            <input type="text" name="username" value="<?php echo $user->username;?>" class="form-control" required id="username" placeholder="Nombre de usuario">
+            <input type="text" name="username" value="<?php echo $user->username;?>" class="form-control" required id="username" placeholder="Nombre de usuario" readonly>
           </div>
-          <label for="inputEmail1" class="col-lg-1 control-label">Correo Electrónico*</label>
+          <label for="inputEmail1" class="col-lg-1 control-label">Correo&nbsp;Electrónico*</label>
           <div class="col-md-3">
             <input type="text" name="email" value="<?php echo $user->email;?>" class="form-control" id="email" placeholder="Correo Electrónico">
           </div>
@@ -59,6 +60,16 @@
               <?php foreach(StockData::getAll() as $stock):?>
               <option value="<?php echo $stock->id;?>" <?php if($user->stock_id==$stock->id){ echo "selected"; } ?> ><?php echo $stock->name;?></option>
               <?php endforeach;?>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+         <label for="inputEmail1" class="col-lg-2 control-label">Tipo*</label>
+          <div class="col-md-3">
+            <select name="kind" class="form-control" required>
+              <option value="">-- SELECCIONAR --</option>
+              <option value="2" <?php if($user->kind=="2"){ echo "selected"; } ?> >Ejecutivo</option>
+              <option value="3" <?php if($user->kind=="3"){ echo "selected"; } ?> >Cajero</option>
             </select>
           </div>
         </div>

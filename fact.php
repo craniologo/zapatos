@@ -29,11 +29,11 @@
 	$client = PersonData::getById($fact->person_id);
 	$user = UserData::getById($fact->user_id);
 
-	$total = $fact->total;
+	$acumulado = $fact->total+$fact->discount;
 	$disc = $fact->discount;
-	$subt = $fact->total-$disc;
-	$igv = $subt*($sett->tax/100);
-	$total_igv = $subt+$igv;
+	$total = $fact->total;
+	$subtotal = $total/(1+$sett->tax/100);
+	$igv = $subtotal*($sett->tax/100);
 
 	$fecha = $fact->created_at;
 	$fechaEntera = strtotime($fecha);
@@ -48,7 +48,7 @@
 	$uMargin = 15;
 
 	$pdf->SetFont('Arial','B',10);    //Letra Arial, negrita (Bold), tam. 20
-	$pdf->Image('storage/settings/'.$sett->image,160,15,30,20,'jpg');
+	$pdf->Image('storage/settings/'.$sett->image,135,15,60,20,'jpg');
 	$pdf->setXY($lMargin,$uMargin);
 	$pdf->Cell(50,5,'GUIA DE VENTA ',1,0,'C');
 	$pdf->Ln(5);
@@ -124,8 +124,8 @@
 	$pdf->Ln(6);
 	$pdf->setX($lMargin);
 	$pdf->Cell(135,6,'',0);
-	$pdf->Cell(25,6,'Total: ',1);
-	$pdf->Cell(20,6,number_format($total,2,".",","),1,0,'R');
+	$pdf->Cell(25,6,'Acumulado: ',1);
+	$pdf->Cell(20,6,number_format($acumulado,2,".",","),1,0,'R');
 	$pdf->Ln(6);
 	$pdf->setX($lMargin);
 	$pdf->Cell(135,6,'',0);
@@ -135,7 +135,7 @@
 	$pdf->setX($lMargin);
 	$pdf->Cell(135,6,'',0);
 	$pdf->Cell(25,6,'Subtotal: ',1);
-	$pdf->Cell(20,6,number_format($subt,2,".",","),1,0,'R');
+	$pdf->Cell(20,6,number_format($subtotal,2,".",","),1,0,'R');
 	$pdf->Ln(6);
 	$pdf->setX($lMargin);
 	$pdf->Cell(135,6,'Atendido por: '.utf8_decode($user->name)." ".utf8_decode($user->lastname),0);
@@ -145,7 +145,7 @@
 	$pdf->setX($lMargin);
 	$pdf->Cell(135,6,'',0);
 	$pdf->Cell(25,6,'Total a Pagar '.$sett->coin,1);
-	$pdf->Cell(20,6,number_format($total_igv,2,".",","),1,0,'R');
+	$pdf->Cell(20,6,number_format($total,2,".",","),1,0,'R');
 
 
 	$pdf->setX($lMargin);
@@ -157,7 +157,7 @@
 	$pdf->SetFont('Arial','',10);
 	$pdf->SetWidths(array(180));
 	$pdf->setX($lMargin);
-	$pdf->Row(array(utf8_decode($sett->tax)));
+	$pdf->Row(array(utf8_decode($sett->note)));
 
 	$pdf->Output();
 ?>

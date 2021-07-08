@@ -19,13 +19,15 @@
 							<table class="table table-bordered datatable table-hover">
 								<thead>
 				                  <th style="text-align: center; width: 30px;">N°</th>
-				                  <th style="text-align: center; width: 200px;">Logo</th>
+				                  <th style="text-align: center; width: 100px;">Logo</th>
 				                  <th style="text-align: center;">Nombre</th>
 				                  <th style="text-align: center;">RUC</th>
 				                  <th style="text-align: center;">Dirección</th>
 				                  <th style="text-align: center;">Teléfono</th>
 				                  <th style="text-align: center;">Impuesto</th>
-				                  <th style="text-align: center; width:80px;">Acción</th>
+				                  <th style="text-align: center;">Moneda</th>
+				                  <th style="text-align: center;">Nota</th>
+				                  <th style="text-align: center; width:150px;">Acción</th>
 				                </thead>
 				                <?php for($number=0; $number<1; $number++); //variable incremental
 				                foreach($setts as $sett): ?>
@@ -40,6 +42,8 @@
 				                  <td><?php echo $sett->address; ?></td>
 				                  <td style="text-align: right;"><?php echo $sett->phone; ?></td>
 				                  <td style="text-align: right;"><?php echo $sett->tax." %"; ?></td>
+				                  <td style="text-align: right;"><?php echo $sett->coin; ?></td>
+				                  <td><?php echo $sett->note; ?></td>
 				                  <td style="text-align: center;">
 				                  	<a href="index.php?view=setting_edit&id=<?php echo $sett->id;?>" class="btn btn-warning btn-xs"><i class="fa fa-edit"></i> Editar</a>
 									<a href="index.php?action=setting_admin_del&id=<?php echo $sett->id;?>&admin=<?php echo $_GET['id']; ?>" onclick="return confirm('¿Está seguro de eliminar?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Eliminar</a>
@@ -84,14 +88,12 @@
 								foreach($users as $user){ ?>
 								<tr>
 									<td style="text-align: center;"><?php echo $number; ?></td><?php $number++;?>
-									<td style='text-align: center;'>
-										<?php
-										if($user->image!=""){
-											$url = "storage/profiles/".$user->image;
-											if(file_exists($url)){
-												echo "<img src='$url' style='width:50px; height:50px;'>";
-											}
-										} ?></td>
+									<td style="text-align: center;">
+					                    <?php if($user->image!=""){ ?>
+					                      <img src="storage/profiles/<?php echo $user->image;?>" style="width:50px; height: 50px; ">
+					                    <?php }else{ ?>
+					                    	<img src="storage/profiles/default.jpg" style="width:50px; height: 50px; ">
+					                    <?php } ?></td>
 									<td><?php echo $user->name." ".$user->lastname; ?></td>
 									<td><?php echo $user->username; ?></td>
 									<td><?php echo $user->email; ?></td>

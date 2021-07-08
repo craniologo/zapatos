@@ -18,9 +18,9 @@
 								<thead>
 									<th style="text-align: center; width: 30px;">N°</th>
 									<th style="text-align: center; width: 50px;">Foto</th>
-									<th style="text-align: center;">Usuario/Catálogo</th>
 									<th style="text-align: center;">Nombre&nbsp;Completo</th>
-									<th style="text-align: center;">Correo Electrónico</th>
+									<th style="text-align: center;">Usuario</th>
+									<th style="text-align: center;">Correo&nbsp;Electrónico</th>
 									<th style="text-align: center;">Us</th>
 									<th style="text-align: center;">Vent</th>
 									<th style="text-align: center;">Cli</th>
@@ -42,8 +42,8 @@
 					                    <?php }else{ ?>
 					                    	<img src="storage/profiles/default.jpg" style="width:50px; height: 50px; ">
 					                    <?php } ?></td>
-									<td><?php echo $user->username; ?></td>
 									<td><a href="index.php?view=user_admin_resources&id=<?php echo $user->id; ?>"><?php echo $user->name." ".$user->lastname; ?></a></td>
+									<td><?php echo $user->username; ?></td>
 									<td><?php echo $user->email; ?></td>
 									<td style="text-align: right;"><?php $num = UserData::getAllByAdmin($user->id); echo count($num); ?>
 									<td style="text-align: right;"><?php $ser = SellData::getSellsByAdmin($user->id); echo count($ser); ?>

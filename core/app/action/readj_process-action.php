@@ -27,6 +27,7 @@ $admin = UserData::getById($_SESSION["user_id"]);
 			$op->price_in = "NULL";
         	$op->price_out = "NULL";
 			$op->sell_id=$s[1];
+			$op->admin_id = $admin->admin_id;
 			$op->add();
 
 		}

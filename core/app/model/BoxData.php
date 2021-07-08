@@ -8,7 +8,7 @@
 			$this->created_at = "NOW()";
 		}
 
-		public function getStock(){ return StockData::getById($this->id); }
+		public function getAdmin(){ return UserData::getById($this->admin_id); }
 
 		public function add(){
 			$sql = "insert into box (ref_id,admin_id,created_at) ";
@@ -49,6 +49,22 @@
 
 		public static function getAll(){
 			$sql = "select * from ".self::$tablename;
+			$query = Executor::doit($sql);
+			$array = array();
+			$cnt = 0;
+			while($r = $query[0]->fetch_array()){
+				$array[$cnt] = new BoxData();
+				$array[$cnt]->id = $r['id'];
+				$array[$cnt]->ref_id = $r['ref_id'];
+				$array[$cnt]->admin_id = $r['admin_id'];
+				$array[$cnt]->created_at = $r['created_at'];
+				$cnt++;
+			}
+			return $array;
+		}
+
+		public static function getAllByAdmin($id){
+			$sql = "select * from ".self::$tablename." where admin_id=$id order by created_at desc";
 			$query = Executor::doit($sql);
 			$array = array();
 			$cnt = 0;

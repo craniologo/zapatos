@@ -5,6 +5,11 @@
 	<div class="row">
 		<div class="col-md-12">
 			<h2><i class="fa fa-truck"></i> Lista de proveedores</h2>
+	    <ol class="breadcrumb">
+	      <li><a href="./?view=home"><i class="fa fa-dashboard"></i> Inicio</a></li>
+	      <li><i class="fa fa-list-ul"></i> Catálogos</li>
+	      <li class="active"><i class="fa fa-truck"></i> Lista de Proveedores</li>
+	    </ol>
 			<a href='#provider_new' data-toggle='modal' class='btn btn-primary'><i class='fa fa-truck'></i> Nuevo Proveedor</a>
 			<br><br>
 			<?php if($u->id==1){
@@ -40,8 +45,10 @@
 										<?php if($u->id==$u->admin_id): ?><td><?php echo $user->name." ".$user->lastname; ?></td><?php endif; ?>
 										<?php if($u->id==1): ?><td><?php echo $admin->name." ".$admin->lastname; ?></td><?php endif; ?>
 										<td style="text-align: center;">
-											<a href="index.php?view=provider_edit&id=<?php echo $provider->id;?>" class="btn btn-warning btn-xs"><i class="fa fa-edit"></i> Editar</a>
+											<a href="index.php?view=provider_edit&id=<?php echo $provider->id;?>" class="btn btn-warning btn-xs"><i class="fa fa-edit"></i> Editar</a>											
+											<?php if($u->id==$provider->user_id): ?>
 											<a href="index.php?action=provider_del&id=<?php echo $provider->id;?>" onclick="return confirm('¿Está seguro de eliminar?')" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Eliminar</a>
+											<?php endif; ?>
 										</td>
 									</tr>
 									<?php } ?>

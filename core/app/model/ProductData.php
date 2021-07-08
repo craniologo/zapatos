@@ -20,6 +20,7 @@ class ProductData {
 	}
 
 	public function getColor(){ return ColorData::getById($this->color_id);}
+	public function getAdmin(){ return UserData::getById($this->admin_id);}
 
 	public function add(){
 		$sql = "insert into product (modelo,sex,color_id,brand_id,size_id,qty,stock_min,price_in,price_out,ubication,admin_id,created_at)";

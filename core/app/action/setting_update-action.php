@@ -6,6 +6,8 @@
 		$product->address = $_POST["address"];
 		$product->phone = $_POST["phone"];
 		$product->tax = $_POST["tax"];
+		$product->coin = $_POST["coin"];
+		$product->note = $_POST["note"];
 		$product->update();
 
 		if(isset($_FILES["image"])){

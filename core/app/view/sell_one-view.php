@@ -7,6 +7,7 @@
 			<?php if(isset($_GET["id"]) && $_GET["id"]!=""):?>
 			<?php $sell = SellData::getById($_GET["id"]);
 			$operations = OperationData::getAllProductsBySellId($_GET["id"]);
+			$sett = SettingData::getByAdmin($sell->admin_id);
 			$total = 0; ?>
 
 			<?php if(isset($_COOKIE["selled"])){
@@ -89,8 +90,8 @@
 										<td><?php echo $product->modelo." ".$product->sex." ".ColorData::getById($product->color_id)->name; ?></td>
 										<td style="text-align: right;"><?php $size = Serie_sizeData::getById($operation->size_id); echo $size->size; ?></td>
 										<td style="text-align: right;"><?php echo $operation->q ;?></td>
-										<td style="text-align: right;"><?php echo "S/ ".number_format($product->price_out, 2, '.', '') ;?></td>
-										<td style="text-align: right;"><?php echo "S/ ".number_format($operation->q*$product->price_out, 2, '.', '');$total+=$operation->q*$product->price_out;?></td>
+										<td style="text-align: right;"><?php echo $sett->coin." ".number_format($product->price_out, 2, '.', '') ;?></td>
+										<td style="text-align: right;"><?php echo $sett->coin." ".number_format($operation->q*$product->price_out, 2, '.', '');$total+=$operation->q*$product->price_out;?></td>
 									</tr>
 									<?php }?>
 								</table>
@@ -99,9 +100,11 @@
 					</div>
 				</div>
 			</div>
-			<?php $total1 = number_format($total-$sell->discount, 2, '.', '');
-			$subt = number_format($total1*.82, 2, '.', '');
-			$igv = number_format($total1*.18, 2, '.', ''); ?>
+			<?php $acumulado = $total+$sell->discount;
+				$disc = $sell->discount;
+				$total = $sell->total;
+				$subtotal = $total/(1+$sett->tax/100);
+				$igv = $subtotal*($sett->tax/100); ?>
 			<div class="col-md-3">
 				<div class="box">
 		  			<div class="box-body no-padding">
@@ -109,24 +112,20 @@
 							<div class="box-body table-responsive">
 								<table class="table table-bordered">
 									<tr>
-										<td>Total(S/):</td>
+										<td>Descuento <?php echo $sett->coin; ?>:</td>
+										<td style="text-align: right;"><?php echo number_format($disc, 2, '.', ''); ?></td>
+									</tr>
+									<tr>
+										<td>Subtotal <?php echo $sett->coin; ?>:</td>
+										<td style="text-align: right;"><?php echo number_format($subtotal, 2, '.', ''); ?></td>
+									</tr>
+									<tr>
+										<td>IGV(18%) <?php echo $sett->coin; ?>:</td>
+										<td style="text-align: right;"><?php echo number_format($igv, 2, '.', ''); ?></td>
+									</tr>
+									<tr>
+										<td>Total a Pagar <?php echo $sett->coin; ?>:</td>
 										<td style="text-align: right;"><?php echo number_format($total, 2, '.', ''); ?></td>
-									</tr>
-									<tr>
-										<td>Descuento(S/ ):</td>
-										<td style="text-align: right;"><?php echo number_format($sell->discount, 2, '.', ''); ?></td>
-									</tr>
-									<tr>
-										<td>Subtotal(S/):</td>
-										<td style="text-align: right;"><?php echo $subt; ?></td>
-									</tr>
-									<tr>
-										<td>IGV(18%)(S/):</td>
-										<td style="text-align: right;"><?php echo $igv; ?></td>
-									</tr>
-									<tr>
-										<td>Total a Pagar(S/):</td>
-										<td style="text-align: right;"><?php echo number_format($total1, 2, '.', ''); ?></td>
 									</tr>
 								</table>
 							</div>
@@ -151,12 +150,13 @@
 			<?php else:?>
 				501 Internal Error
 			<?php endif; ?>
-			<?php $title = ConfigurationData::getByPreffix("company_name")->val;
-			$address = ConfigurationData::getByPreffix("address")->val;
-			$phone = ConfigurationData::getByPreffix("phone")->val;
-			$image = ConfigurationData::getByPreffix("report_image")->val;
-			$note = ConfigurationData::getByPreffix("note")->val;
-			$imp = ConfigurationData::getByPreffix("imp-val")->val; ?>
+			<?php $sett = SettingData::getByAdmin($sell->admin_id);
+			$title = $sett->company;
+			$address = $sett->address;
+			$phone = $sett->phone;
+			$image = $sett->image;
+			$note = $sett->note;
+			$imp = $sett->tax; ?>
 			<script>
 			function sendToQuickPrinterChrome(){
 			    var text = "<big><?php echo $title; ?><br><?php echo $address; ?><br>Cel: <?php echo $phone; ?><br>Cliente: <?php echo $client->name." ".$client->lastname;?><br>RUC/DNI: <?php echo $client->ruc;?><br>Dir: <?php echo $client->address1;?><br>Fecha: <?php echo $sell->created_at;?><br>Cajero: <?php echo $user->name." ".$user->lastname;?><br><DLINE>Can Productos PUni(S/) PTot(S/)<br><?php foreach($operations as $operation){ $product  = $operation->getProduct();?><?php echo $operation->q ;?> <?php echo substr($product->modelo, 0,4)." ".substr($product->sex, 0,4)." ".substr(ColorData::getById($product->color_id)->name, 0,4);?>   <?php echo number_format($product->price_out,2,".",",") ;?>   <?php echo number_format($operation->q*$product->price_out,2,".",",");$total+=$operation->q*$product->price_out;?><br><?php }?><DLINE>Descuento: S/ <?php echo number_format($sell->discount,2,'.',','); ?><br>Subtotal : S/ <?php echo number_format($subt,2,".",","); ?><br>IGV(18%) : S/ <?php echo number_format($igv,2,".",","); ?><br>Total    : S/ <?php echo $total1; ?><br><big>Vuelva Pronto!<br>";

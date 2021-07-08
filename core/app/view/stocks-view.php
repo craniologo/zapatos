@@ -5,6 +5,11 @@
 	<div class="row">
 		<div class="col-md-12">
 			<h2><i class="fa fa-building"></i> Lista de Sucursales</h2>
+	        <ol class="breadcrumb">
+	          <li><a href="./?view=home"><i class="fa fa-dashboard"></i> Inicio</a></li>
+	          <li><i class="fa fa-cube"></i> Stock</li>
+	          <li class="active"><i class="fa fa-building"></i> Sucursales</li>
+	        </ol>
 			<a href='#stock_new' data-toggle='modal' class='btn btn-primary'><i class='fa fa-building'></i> Nueva Sucursal</a>
 			<br><br>
 			<?php if($u->id==1){

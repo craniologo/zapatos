@@ -5,11 +5,16 @@
 	<div class="row">
 		<div class="col-md-12">
 			<h2><i class="fa fa-coffee"></i> Lista de Gastos</h2>
+	    <ol class="breadcrumb">
+	      <li><a href="./?view=home"><i class="fa fa-dashboard"></i> Inicio</a></li>
+	      <li><i class="fa fa-money"></i> Finanzas</li>
+	      <li class="active"><i class="fa fa-coffee"></i> Lista de Gastos</li>
+	    </ol>
 			<a href='#material_new' data-toggle='modal' class='btn btn-default'><i class='fa fa-coffee'></i> Nuevo Gasto</a>
 			<br><br>
 			<?php if($u->id==1){
 				$spends = SpendData::getAll();
-			}else if($u->admin_id){
+			}else if($u->id==$u->admin_id){
 				$spends = SpendData::getAllByAdmin($u->admin_id);
 			}else{
 				$spends = SpendData::getAllByUser($u->id);

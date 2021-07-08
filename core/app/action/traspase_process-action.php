@@ -75,6 +75,7 @@
                 $op->price_in = $product->price_in;
                 $op->price_out = $product->price_out;
                 $op->sell_id=$s[1];
+                $op->admin_id = $admin->admin_id;
                 $add = $op->add();
 
                 $operation_type = "salida";
@@ -89,6 +90,7 @@
                 $op->price_in = $product->price_in;
                 $op->price_out = $product->price_out;
                 $op->sell_id=$s[1];
+                $op->admin_id = $admin->admin_id;
                 $op->add();
 
                 $op = new OperationData();
@@ -101,8 +103,8 @@
                 $op->price_in = $product->price_in;
                 $op->price_out = $product->price_out;
                 
-                $op->sell_id=$s[1];
-                
+                $op->sell_id=$s[1];                
+                $op->admin_id = $admin->admin_id;
                 $add = $op->add();
 
                 unset($_SESSION["traspase"]);

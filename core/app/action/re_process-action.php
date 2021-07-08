@@ -37,6 +37,7 @@
 				$op->price_in = "NULL";
 	        	$op->price_out = "NULL";
 				$op->sell_id=$s[1];
+				$op->admin_id = $admin->admin_id;
 				$add = $op->add();			 		
 
 			}

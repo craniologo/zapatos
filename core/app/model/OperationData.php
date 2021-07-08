@@ -13,6 +13,7 @@ class OperationData {
 		$this->sell_id = "";
 		$this->status = "1";
 		$this->is_draf = "";
+		$this->admin_id = "";
 		$this->created = "NOW()";
 		$this->created_at = "NOW()";
 	}
@@ -22,8 +23,8 @@ class OperationData {
 	public function getSize(){ return Serie_sizeData::getById($this->size_id);}
 
 	public function add(){
-		$sql = "insert into ".self::$tablename." (status, price_in,price_out,stock_id,product_id,q,size_id,operation_type_id,sell_id,operation_from_id,created,created_at) ";
-		$sql .= "value ($this->status, $this->price_in,$this->price_out,$this->stock_id,\"$this->product_id\",\"$this->q\",\"$this->size_id\",$this->operation_type_id,$this->sell_id,$this->operation_from_id,$this->created,$this->created_at)";
+		$sql = "insert into ".self::$tablename." (status, price_in,price_out,stock_id,product_id,q,size_id,operation_type_id,sell_id,operation_from_id,admin_id,created,created_at) ";
+		$sql .= "value ($this->status, $this->price_in,$this->price_out,$this->stock_id,\"$this->product_id\",\"$this->q\",\"$this->size_id\",$this->operation_type_id,$this->sell_id,$this->operation_from_id,$this->admin_id,$this->created,$this->created_at)";
 		return Executor::doit($sql);
 	}
 

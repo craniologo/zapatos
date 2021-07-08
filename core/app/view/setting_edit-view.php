@@ -41,10 +41,20 @@
           <div class="col-md-3">
             <input type="text" name="tax" class="form-control" id="tax" value="<?php echo $config->tax; ?>" placeholder="Porcentaje de impuesto" required>
           </div>
+          <label for="inputEmail1" class="col-lg-1 control-label">Moneda*</label>
+          <div class="col-md-3">
+            <input type="text" name="coin" class="form-control" id="coin" value="<?php echo $config->coin; ?>" placeholder="Deominación de moneda" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputEmail1" class="col-lg-2 control-label">Nota del Documento</label>
+          <div class="col-md-7">
+            <textarea type="text" name="note" class="form-control" id="note" value="" placeholder="Descripción de la nota" required><?php echo $config->note; ?></textarea>
+          </div>
         </div>
         <div class="form-group">
           <div class="col-lg-offset-2 col-lg-7">
-            <p class="alert alert-info">* Campos obligatorios: Empresa, Dirección, RUC, Teléfono</p>
+            <p class="alert alert-info">* Campos obligatorios</p>
           </div>
         </div>
         <div class="form-group">

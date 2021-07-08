@@ -3,6 +3,11 @@
  	 if(isset($_SESSION["user_id"]) &&$_SESSION["user_id"]!=""):
   	$u = UserData::getById($_SESSION["user_id"]); ?>
 	<h2><i class="fa fa-star-half-o"></i> Marcas y Colores</h2>
+    <ol class="breadcrumb">
+      <li><a href="./?view=home"><i class="fa fa-dashboard"></i> Inicio</a></li>
+      <li><i class="fa fa-list-ul"></i> Catálogos</li>
+      <li class="active"><i class="fa fa-star-half-o"></i> Marcas y Colores</li>
+    </ol>
 	<p>Aquí están registrados todos los detalles relacionados a los productos.</p>
 	<a href="#color_new" class="btn btn-default" data-toggle="modal"><i class='fa fa-tint'></i> Nuevo Color</a><br><br>
 	<div class="row">

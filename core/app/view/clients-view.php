@@ -4,8 +4,13 @@
   $u = UserData::getById($_SESSION["user_id"]); ?>
 	<div class="row">
 		<div class="col-md-12">
-			<h2><i class="fa fa-users"></i> Lista de Clientes</h2>
-			<a href='#client_new' data-toggle='modal' class='btn btn-primary'><i class='fa fa-users'></i> Nuevo Cliente</a>
+			<h2><i class="fa fa-male"></i> Lista de Clientes</h2>
+	    <ol class="breadcrumb">
+	      <li><a href="./?view=home"><i class="fa fa-dashboard"></i> Inicio</a></li>
+	      <li><i class="fa fa-list-ul"></i> Catálogos</li>
+	      <li class="active"><i class="fa fa-male"></i> Lista de Clientes</li>
+	    </ol>
+			<a href='#client_new' data-toggle='modal' class='btn btn-primary'><i class='fa fa-male'></i> Nuevo Cliente</a>
 			<br><br>
 			<?php if($u->id==1){
 				$clients = PersonData::getClients();
@@ -30,8 +35,8 @@
 									</thead>
 									<?php for($number=0; $number<1; $number++); //variable incremental
 									foreach($clients as $client){
-										$user = $provider->getUser();
-										$admin = $provider->getAdmin(); ?>
+										$user = $client->getUser();
+										$admin = $client->getAdmin(); ?>
 									<tr>
 										<td style="text-align: center;"><?php echo $number; ?></td> <?php $number++; ?><!--var incremen-->
 										<td><?php echo $client->name." ".$client->lastname; ?></td>
@@ -41,7 +46,9 @@
 										<?php if($u->id==1): ?><td><?php echo $admin->name." ".$admin->lastname; ?></td><?php endif; ?>
 										<td style="text-align: center;">
 											<a href="index.php?view=client_edit&id=<?php echo $client->id;?>" class="btn btn-warning btn-xs"><i class="fa fa-edit"></i> Editar</a>
+											<?php if($u->id==$client->user_id): ?>
 											<a href="index.php?action=client_del&id=<?php echo $client->id;?>" onclick="return confirm('¿Está seguro de eliminar?')" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Eliminar</a>
+											<?php endif; ?>
 										</td>
 									</tr>
 									<?php } ?>

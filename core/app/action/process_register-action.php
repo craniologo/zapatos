@@ -44,6 +44,6 @@
 		$conf->add();
 
 		Core::alert("Registro Exitoso!, ya puedes a iniciar sesion con tu nombre de usuario y password.");
-		//print "<script>window.location='index.php?view=login';</script>";
+		print "<script>window.location='index.php?view=login';</script>";
 	}
 ?>

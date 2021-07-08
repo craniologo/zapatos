@@ -2,6 +2,11 @@
 	<div class="row">
 		<div class="col-md-12">
 			<h2><i class='fa fa-adjust'></i> Lista de Reajustes</h2>
+	        <ol class="breadcrumb">
+	          <li><a href="./?view=home"><i class="fa fa-dashboard"></i> Inicio</a></li>
+	          <li><i class="fa fa-cube"></i> Stock</li>
+	          <li class="active"><i class="fa fa-adjust"></i> Reajustes</li>
+	        </ol>
 			<a href="index.php?view=readjustment" class="btn btn-default"><i class='fa fa-adjust'></i> Reajuste</a>
 			<br><br>
 			<?php $products = SellData::getReadjs();

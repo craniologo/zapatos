@@ -10,8 +10,8 @@
       <div class="form-horizontal" id="size">
         <label for="inputEmail1" class="col-lg-2 control-label">Series/Tallas*</label>
         <div class="col-md-2">
-          <select name="serie_id" id="serie_id" class="form-control" required="">
-            <option value="">--SELECCIONAR--</option>
+          <select name="serie_id" id="serie_id" class="form-control" required>
+            <option value="">-- SELECCIONAR --</option>
             <?php foreach(Serie_sizeData::getAllSerie() as $ser):?>
             <option value="<?php echo $ser->serie_id;?>" <?php if(isset($_GET["serie_id"]) && $_GET["serie_id"]==$ser->serie_id){ echo "selected"; } ?> >Serie <?php echo $ser->serie_id;?></option>
             <?php endforeach;?>
@@ -55,7 +55,7 @@
           </div><?php endif;?>
         </div>
         <div class="form-group">
-          <label for="inputEmail1" class="col-lg-2 control-label">Imagen (ancho 200px)</label>
+          <label for="inputEmail1" class="col-lg-2 control-label">Foto JPG (400x400px)</label>
           <div class="col-md-6">
             <input type="file" name="image" id="image" onchange="ValidarImagen(this);" placeholder="">
           </div>

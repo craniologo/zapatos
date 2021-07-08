@@ -5,7 +5,8 @@
         ${demo.css}
     </style>
 <head>
-<?php $a = new Database; $connection = $a->connect(); ?>
+<?php $admin = UserData::getById($_SESSION["user_id"]);
+$a = new Database; $connection = $a->connect(); ?>
 <!--inicio de grafico de torta-->
 <script type="text/javascript">
 $(function () {
@@ -33,13 +34,14 @@ $(function () {
         series: [{
             name: "Usuario",
             colorByPoint: true,
-            data: [
-                    <?php $sql = "SELECT user_id, COUNT(user_id) AS suma FROM sell WHERE operation_type_id=2 GROUP BY user_id";
+            data: [ <?php if($admin->id==1){
+                        $sql = "SELECT user_id, COUNT(user_id) AS suma FROM sell WHERE operation_type_id=2 GROUP BY user_id";
+                    }else{
+                        $sql = "SELECT user_id, COUNT(user_id) AS suma FROM sell WHERE operation_type_id=2 and admin_id=$admin->admin_id GROUP BY user_id";
+                    }
                 $result = mysqli_query($connection,$sql);
             while ($registros = mysqli_fetch_array($result)){ 
-            $dat = $registros["user_id"];
-            
-             ?>
+            $dat = $registros["user_id"]; ?>
            
             ['<?php $name = UserData::getById($dat);
             echo $name->name." ".$name->lastname; ?>', <?php echo $registros["suma"] ?>],
@@ -80,13 +82,14 @@ $(function () {
         series: [{
             name: "Usuario",
             colorByPoint: true,
-            data: [
-                    <?php $sql = "SELECT user_id, SUM(total) AS suma FROM sell WHERE operation_type_id=2 GROUP BY user_id";
+            data: [ <?php if($admin->id==1){
+                        $sql = "SELECT user_id, SUM(total) AS suma FROM sell WHERE operation_type_id=2 GROUP BY user_id";
+                    }else{
+                        $sql = "SELECT user_id, SUM(total) AS suma FROM sell WHERE operation_type_id=2 and admin_id=$admin->admin_id GROUP BY user_id";
+                    }
                 $result = mysqli_query($connection,$sql);
             while ($registros = mysqli_fetch_array($result)){ 
-            $dat = $registros["user_id"];
-            
-             ?>
+            $dat = $registros["user_id"]; ?>
            
             ['<?php $name = UserData::getById($dat);
             echo $name->name." ".$name->lastname; ?>', <?php echo $registros["suma"] ?>],
@@ -141,11 +144,14 @@ $(function () {
         series: [{
             name: "Producto",
             colorByPoint: true,
-            data: [ <?php $sql = "SELECT size_id, SUM(price_out - price_in) AS resta FROM product GROUP BY size_id ORDER BY resta DESC LIMIT 5";
+            data: [ <?php if($admin->id==1){
+                $sql = "SELECT size_id, SUM(price_out - price_in) AS resta FROM product GROUP BY size_id ORDER BY resta DESC LIMIT 5";
+            }else{
+                $sql = "SELECT size_id, SUM(price_out - price_in) AS resta FROM product WHERE admin_id=$admin->admin_id GROUP BY size_id ORDER BY resta DESC LIMIT 5";
+            }
                 $result = mysqli_query($connection,$sql);
             while ($registros = mysqli_fetch_array($result)){ 
-            $dat = $registros["size_id"]; 
-             ?>
+            $dat = $registros["size_id"]; ?>
             [
                 '<?php $name = ProductData::getBySerieId($dat); echo substr($name->modelo, 0, 15); ?>',
                 <?php echo $registros["resta"]; ?>
@@ -200,7 +206,11 @@ $(function () {
         series: [{
             name: "Producto",
             colorByPoint: true,
-            data: [ <?php $sql = "SELECT product_id,size_id, SUM(q) AS suma FROM operation WHERE operation_type_id=2 GROUP BY product_id,size_id ORDER BY suma DESC LIMIT 5";
+            data: [ <?php if($admin->id==1){
+                $sql = "SELECT product_id,size_id, SUM(q) AS suma FROM operation WHERE operation_type_id=2 GROUP BY product_id,size_id ORDER BY suma DESC LIMIT 5";
+            }else{
+                $sql = "SELECT product_id,size_id, SUM(q) AS suma FROM operation WHERE operation_type_id=2 and admin_id=$admin->admin_id GROUP BY product_id,size_id ORDER BY suma DESC LIMIT 5";
+            }
                 $result = mysqli_query($connection,$sql);
             while ($registros = mysqli_fetch_array($result)){ 
             $dat = $registros["product_id"];
@@ -230,18 +240,17 @@ $(function () {
             text: 'Número de Ventas en los Últimos 15 Días'
         },
         xAxis: {
-            categories: [
-            <?php
-            $sql = "SELECT created, COUNT(user_id) AS suma FROM sell WHERE operation_type_id=2 GROUP BY created ORDER by created DESC LIMIT 15";
-            $result = mysqli_query($connection,$sql);
-            while ($registros = mysqli_fetch_array($result)) 
-            {
-            ?>
-                '<?php $fecha = $registros["created"];
-                echo substr($fecha,2,8) ?>',
-            <?php
-            }
-            ?>
+            categories: [  <?php if($admin->id==1){
+                    $sql = "SELECT created, COUNT(user_id) AS suma FROM sell WHERE operation_type_id=2 GROUP BY created ORDER by created DESC LIMIT 15";
+                }else{
+                    $sql = "SELECT created, COUNT(user_id) AS suma FROM sell WHERE operation_type_id=2 and admin_id=$admin->admin_id GROUP BY created ORDER by created DESC LIMIT 15";
+                }
+                $result = mysqli_query($connection,$sql);
+                while ($registros = mysqli_fetch_array($result)) 
+                { ?>
+                    '<?php $fecha = $registros["created"];
+                    echo substr($fecha,2,8) ?>',
+                <?php } ?>
             ]
         },
         yAxis: {
@@ -270,16 +279,17 @@ $(function () {
         series: [{
             name: 'Ventas',
             data: [
-                <?php
-            $sql = "SELECT created, COUNT(user_id) AS suma FROM sell WHERE operation_type_id=2 GROUP BY created ORDER by created DESC LIMIT 15";
+                <?php if($admin->id==1){
+                $sql = "SELECT created, COUNT(user_id) AS suma FROM sell WHERE operation_type_id=2 GROUP BY created ORDER by created DESC LIMIT 15";
+            }else{
+                $sql = "SELECT created, COUNT(user_id) AS suma FROM sell WHERE operation_type_id=2 and admin_id=$admin->admin_id GROUP BY created ORDER by created DESC LIMIT 15";
+            }
             $result = mysqli_query($connection,$sql);
             while ($registros = mysqli_fetch_array($result)) 
             {
             ?>
                 <?php echo $registros["suma"] ?>,
-            <?php
-            }
-            ?>
+            <?php } ?>
             ]
         }]
     });
@@ -297,18 +307,17 @@ $(function () {
             text: 'Monto de Ventas de los Últimos 15 Días'
         },
         xAxis: {
-            categories: [
-            <?php
+            categories: [ <?php if($admin->id==1){
             $sql = "SELECT created, SUM(total) AS suma FROM sell WHERE operation_type_id=2 GROUP BY created LIMIT 15";
+        }else{            
+            $sql = "SELECT created, SUM(total) AS suma FROM sell WHERE operation_type_id=2 and admin_id=$admin->admin_id GROUP BY created LIMIT 15";
+        }
             $result = mysqli_query($connection,$sql);
             while ($registros = mysqli_fetch_array($result)) 
-            {
-            ?>
+            { ?>
                 '<?php $fecha = $registros["created"];
                 echo substr($fecha,2,8); ?>',
-            <?php
-            }
-            ?>
+            <?php } ?>
             ]
         },
         yAxis: {
@@ -336,17 +345,16 @@ $(function () {
         },
         series: [{
             name: 'Ventas S/',
-            data: [
-                <?php
-            $sql = "SELECT created, SUM(total) AS suma FROM sell WHERE operation_type_id=2 GROUP BY created LIMIT 15";
+            data: [ <?php if($admin->id==1){
+                $sql = "SELECT created, SUM(total) AS suma FROM sell WHERE operation_type_id=2 GROUP BY created LIMIT 15";
+            }else{
+                $sql = "SELECT created, SUM(total) AS suma FROM sell WHERE operation_type_id=2 and admin_id=$admin->admin_id GROUP BY created LIMIT 15";
+            }
             $result = mysqli_query($connection,$sql);
             while ($registros = mysqli_fetch_array($result)) 
-            {
-            ?>
+            { ?>
                 <?php echo $registros["suma"] ?>,
-            <?php
-            }
-            ?>
+            <?php } ?>
             ]
         }]
     });
@@ -358,7 +366,13 @@ $(function () {
 <section class="content">
     <div class="row">
         <div class="col-md-12">
-            <h2 style="text-align: center;"><i class="fa fa-bar-chart-o"></i> Gráficas de Productividad</h2>
+            <h2><i class="fa fa-bar-chart-o"></i> Productividad</h2>
+            <p>Gráficas estadísticas de productividad para la toma de decisiones en la empresa.</p>
+            <ol class="breadcrumb">
+              <li><a href="./?view=home"><i class="fa fa-dashboard"></i> Inicio</a></li>
+              <li><i class="fa fa-bar-chart-o"></i> Gráficas</li>
+              <li class="active"><i class="fa fa-bar-chart-o"></i> Productividad</li>
+            </ol>
             <div class="col-sm-6" id="container" style="min-width: auto; height: 250px; border: 1px solid" >
             <!--Muestra el grafico dinamico-->
             </div>
