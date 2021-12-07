@@ -5,12 +5,12 @@
 	<div class="row">
 		<div class="col-md-12">
 			<h2><i class="fa fa-users"></i> Lista de Usuarios</h2>
-			<p>Lista de usuarios que tienen acceso al sistema, puedes agregar Ejecutivos de Venta o Cajeros y asignarle la sucursal que le corresponde.</p>
 	    <ol class="breadcrumb">
 	      <li><a href="./?view=home"><i class="fa fa-dashboard"></i> Inicio</a></li>
 	      <li><i class="fa fa-cog"></i> Administración</li>
 	      <li class="active"><i class="fa fa-users"></i> Lista de Usuarios</li>
 	    </ol>
+			<p>Lista de usuarios que tienen acceso al sistema, puedes agregar Ejecutivos de Venta o Cajeros y asignarle la sucursal que le corresponde.</p>
 			<?php $users = UserData::getAllByAdmin($u->admin_id);
 			$agent = UserData::getById($u->admin_id)->limit_users;
 			if(count($users) < $agent || $agent == 0){ ?>

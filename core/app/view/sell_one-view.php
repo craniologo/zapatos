@@ -78,12 +78,13 @@
 										<th style="text-align: center;">Producto</th>
 										<th style="text-align: center;">Talla</th>
 										<th style="text-align: center;">Cant</th>
-										<th style="text-align: center;">P. Unit</th>
-										<th style="text-align: center;">Total</th>
+										<th style="text-align: center;">Unit&nbsp;<?php echo $sett->coin; ?></th>
+										<th style="text-align: center;">Total&nbsp;<?php echo $sett->coin; ?></th>
 									</thead>
 									<?php for($number=0; $number<1; $number++); //variable incremental
 									foreach($operations as $operation){
-										$product  = $operation->getProduct();?>
+										$product  = $operation->getProduct();
+										$acum = 0;?>
 									<tr>
 										<td style="text-align: center;"><?php echo $number; ?></td> <?php $number++; ?><!--var incremen-->
 										<td style="text-align: right;"><?php echo $product->barcode ;?></td>
@@ -93,8 +94,10 @@
 										<td style="text-align: right;"><?php echo $sett->coin." ".number_format($product->price_out, 2, '.', '') ;?></td>
 										<td style="text-align: right;"><?php echo $sett->coin." ".number_format($operation->q*$product->price_out, 2, '.', '');$total+=$operation->q*$product->price_out;?></td>
 									</tr>
+									<?php $acum+=$total; ?>
 									<?php }?>
 								</table>
+								<h4>Acumulado : S/ <?php echo number_format($acum,2,".",",")?></h4>
 							</div>
 						</div>
 					</div>
@@ -120,7 +123,7 @@
 										<td style="text-align: right;"><?php echo number_format($subtotal, 2, '.', ''); ?></td>
 									</tr>
 									<tr>
-										<td>IGV(18%) <?php echo $sett->coin; ?>:</td>
+										<td>IGV<?php echo "(".$sett->tax."%) ".$sett->coin; ?>:</td>
 										<td style="text-align: right;"><?php echo number_format($igv, 2, '.', ''); ?></td>
 									</tr>
 									<tr>
@@ -139,7 +142,7 @@
 				        <label>
 							<div>
 								<a name="nueva" id="nueva" href="index.php?view=sell"><input type="button" name="nueva" id="nueva" value="Nueva"></a>
-								<a target="_blank" href="ticket.php?id=<?php echo $sell->id; ?>"><input type="button" name="nueva" id="nueva" value="Tck Usb"></a>
+								<!--<a target="_blank" href="ticket.php?id=<?php echo $sell->id; ?>"><input type="button" name="nueva" id="nueva" value="Tck Usb"></a>-->
 								<a target="_blank" href="fact.php?id=<?php echo $sell->id; ?>"><input type="button" name="nueva" id="nueva" value="A4 Usb"></a>
 								<input type="button" name="ticket" id="ticket" value="Tck Bth" onClick="sendToQuickPrinterChrome();">
 							</div>

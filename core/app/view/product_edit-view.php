@@ -14,13 +14,14 @@
       <br><br>
       <form class="form-horizontal" method="post" enctype="multipart/form-data" name="product_update_barcode" id="product_update_barcode" action="index.php?action=product_update" role="form">
         <div class="form-group">
-          <label for="inputEmail1" class="col-lg-2 control-label">Imagen (ancho 200px)</label>
+          <label for="inputEmail1" class="col-lg-2 control-label">Imagen JPG(400x400px)</label>
           <div class="col-md-3">
             <input type="file" name="image" id="name" onchange="ValidarImagen(this);" placeholder="">
-            <?php if($product->image!=""):?>
-            <br>
-              <img src="storage/products/<?php echo $product->image;?>" class="img-responsive" style="width: 200px; height: 200px; border-radius: 100px;">
-            <?php endif;?>
+            <?php if($product->image!=""){
+              echo '<img src="storage/products/'.$product->image.'" class="img-responsive" style="height:300px; border-radius: 5px; border: gray 1px solid;">';
+            }else{
+              echo '<img src="storage/products/default.jpg" class="img-responsive" style="height:300px; border-radius: 5px; border: gray 1px solid;">';
+            } ?>
           </div>
           <label for="inputEmail1" class="col-lg-2 control-label">Código de Barras</label>
           <div class="col-md-3">

@@ -41,9 +41,11 @@
                 <tr>
                   <td style="text-align: center;"><?php echo $number; ?></td> <?php $number++; ?><!--var incremen-->
                   <td style="text-align: center;">
-                  <?php if($sett->image!=""):?>
-                    <img src="storage/settings/<?php echo $sett->image;?>" style="width:150px; height: 50px; ">
-                  <?php endif;?></td>
+                  <?php if($sett->image!=""){ ?>
+                    <img src="storage/settings/<?php echo $sett->image;?>" style="width:150px; height: 50px;" >
+                    <?php }else{ ?>
+                    <img src="storage/settings/default.jpg" style="width:150px; height: 50px;" >
+                    <?php } ?></td>
                   <td><?php echo $sett->company; ?></td>
                   <td style="text-align: right;"><?php echo $sett->ruc; ?></td>
                   <td><?php echo $sett->address; ?></td>

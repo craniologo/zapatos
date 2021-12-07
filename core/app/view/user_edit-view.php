@@ -1,13 +1,12 @@
 <section class="content">
-  <?php $user = UserData::getById($_GET["id"]);
-  if($user->kind==1){
-    $t_user = "Administrador";
-  }else{
-    $t_user = "Ejecutivo";
-  } ?>
+  <?php $u=null;
+  if(isset($_SESSION["user_id"]) &&$_SESSION["user_id"]!=""):
+    $u = UserData::getById($_SESSION["user_id"]);
+    $user = UserData::getById($_GET["id"]);
+    if($user->admin_id==$u->admin_id || $u->id==1){ ?>
   <div class="row">
   	<div class="col-md-12">
-  	<h2><i class="fa fa-user"></i> Editar <?php echo $t_user; ?></h2>
+  	<h2><i class="fa fa-user"></i> Editar Usuario</h2>
   	 <a href="index.php?view=users" class="btn btn-default"><i class="fa fa-arrow-left"></i> Regresar</a>
         <br><br>
   		<form class="form-horizontal" method="post" id="user_update" enctype="multipart/form-data" action="index.php?action=user_update" role="form">
@@ -98,4 +97,6 @@
       </form>
   	</div>
   </div>
+  <?php } ?>
+  <?php endif; ?>
 </section>

@@ -48,7 +48,11 @@
 	$uMargin = 15;
 
 	$pdf->SetFont('Arial','B',10);    //Letra Arial, negrita (Bold), tam. 20
-	$pdf->Image('storage/settings/'.$sett->image,135,15,60,20,'jpg');
+	if(isset($sett->image)){
+		$pdf->Image('storage/settings/'.$sett->image,135,15,60,20,'jpg');
+	}else{
+		$pdf->Image('storage/settings/default.jpg',135,15,60,20,'jpg');
+	}
 	$pdf->setXY($lMargin,$uMargin);
 	$pdf->Cell(50,5,'GUIA DE VENTA ',1,0,'C');
 	$pdf->Ln(5);
@@ -71,7 +75,7 @@
 	$pdf->Cell(45,5,'',0);
 	$pdf->Cell(45,5,'',0);
 	$pdf->SetFont('Arial','',10);
-	$pdf->Cell(45,5,$sett->address,0);
+	$pdf->Cell(45,5,utf8_decode($sett->address),0);
 	$pdf->Ln(5);
 	$pdf->setX($lMargin);
 	$pdf->Cell(140,5,'Nombre: '.utf8_decode($client->name.' '.$client->lastname),0);
@@ -81,7 +85,7 @@
 	$pdf->Cell(50,5,'RUC/DNI: '.$client->ruc,0);
 	$pdf->Ln(5);
 	$pdf->setX($lMargin);
-	$pdf->Cell(100,5,'Direccion: '.$client->address,0);
+	$pdf->Cell(100,5,'Direccion: '.utf8_decode($client->address),0);
 	$pdf->Ln(5);
 	$pdf->SetFont('Arial','B',10);
 	$pdf->Ln(8);
@@ -117,29 +121,29 @@
 
 		if($i<=$vert){
 			$j = $j+18;
-			$pdf->Row(array($product->barcode,$pdf->Image('storage/products/'.$image1,36,$j+18,18,18),utf8_decode($product->modelo." ".$product->sex),$color->name,$op->q,$size->size,number_format($product->price_out,2,".",","),number_format($op->q*$product->price_out,2,".",",")));
+			$pdf->Row(array($product->barcode,$pdf->Image('storage/products/'.$image1,36,$j+18,18,18),utf8_decode($product->modelo." ".$product->sex),utf8_decode($color->name),$op->q,$size->size,number_format($product->price_out,2,".",","),number_format($op->q*$product->price_out,2,".",",")));
 			$i = $i+1;
 		}
 	}
 	$pdf->Ln(6);
 	$pdf->setX($lMargin);
 	$pdf->Cell(135,6,'',0);
-	$pdf->Cell(25,6,'Acumulado: ',1);
+	$pdf->Cell(25,6,'Acumulado '.$sett->coin,1);
 	$pdf->Cell(20,6,number_format($acumulado,2,".",","),1,0,'R');
 	$pdf->Ln(6);
 	$pdf->setX($lMargin);
 	$pdf->Cell(135,6,'',0);
-	$pdf->Cell(25,6,'Descuento: ',1);
+	$pdf->Cell(25,6,'Descuento '.$sett->coin,1);
 	$pdf->Cell(20,6,number_format($disc,2,".",","),1,0,'R');
 	$pdf->Ln(6);
 	$pdf->setX($lMargin);
 	$pdf->Cell(135,6,'',0);
-	$pdf->Cell(25,6,'Subtotal: ',1);
+	$pdf->Cell(25,6,'Subtotal '.$sett->coin,1);
 	$pdf->Cell(20,6,number_format($subtotal,2,".",","),1,0,'R');
 	$pdf->Ln(6);
 	$pdf->setX($lMargin);
 	$pdf->Cell(135,6,'Atendido por: '.utf8_decode($user->name)." ".utf8_decode($user->lastname),0);
-	$pdf->Cell(25,6,'IGV'.$sett->tax.'%',1);
+	$pdf->Cell(25,6,'IGV ('.$sett->tax.'%) '.$sett->coin,1);
 	$pdf->Cell(20,6,number_format($igv,2,".",","),1,0,'R');
 	$pdf->Ln(6);
 	$pdf->setX($lMargin);

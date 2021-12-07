@@ -2,7 +2,8 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <?php $u=null;
   if(isset($_SESSION["user_id"]) &&$_SESSION["user_id"]!=""):
-  $u = UserData::getById($_SESSION["user_id"]); ?>
+  $u = UserData::getById($_SESSION["user_id"]);
+  $sett = SettingData::getByAdmin($u->admin_id); ?>
 	<div class="row">
 		<div class="col-md-12">
 			<h2><i class="fa fa-shopping-cart"></i> Vender</h2>
@@ -97,8 +98,8 @@
 					<th style="text-align: center;">Serie</th>
 					<th style="text-align: center;">Talla</th>
 					<th style="text-align: center; width:30px;">Cant.</th>
-					<th style="text-align: center; width: 30px;">Precio&nbsp;S/</th>
-					<th style="text-align: center; width: 30px;">Total&nbsp;S/</th>
+					<th style="text-align: center;">Precio&nbsp;<?php echo $sett->coin; ?></th>
+					<th style="text-align: center;">Total&nbsp;<?php echo $sett->coin; ?></th>
 					<th style="text-align: center;">Acción</th>
 				</thead>
 				<?php for($number=0; $number<1; $number++); //variable incremental
@@ -113,16 +114,16 @@
 					<td style="text-align: center;"><?php $size = Serie_sizeData::getById($p["size_id"]); echo $size->serie_id; ?></td>
 					<td style="text-align: center;"><?php $size = Serie_sizeData::getById($p["size_id"]); echo $size->size; ?></td>
 					<td style="text-align: center;"><?php echo $p["q"]; ?></td>
-					<td style="text-align: right;"><?php echo number_format($product->price_out,2,".",","); ?></td>
-					<td style="text-align: right;"><b><?php  $pt = $product->price_out*$p["q"]; $subtotal +=$pt; echo number_format($pt,2,".",","); ?></b></td>
-					<td style="width:30px;"><a href="index.php?action=cart_clear&product_id=<?php echo $product->id; ?>" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i></a></td>
+					<td style="text-align: right;"><b><?php echo $sett->coin." ".number_format($product->price_out,2,".",","); ?></b></td>
+					<td style="text-align: right;"><b><?php  $pt = $product->price_out*$p["q"]; $subtotal +=$pt; echo $sett->coin." ".number_format($pt,2,".",","); ?></b></td>
+					<td style="width:30px;"><a href="index.php?action=cart_clear&product_id=<?php echo $product->id; ?>" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a></td>
 				</tr>
 				<?php endforeach; ?>
 			</table>
 		</div>
 		<div class="col-md-12">
 			<form method="post" class="form-horizontal" id="sell_process" action="index.php?action=sell_process" name="sell_process">
-				<h3>Resumen: Total S/. <?php echo number_format($subtotal,2,".",","); ?> </h3>
+				<h3>Resumen: Total <?php echo $sett->coin." ".number_format($subtotal,2,".",","); ?> </h3>
 				<div class="form-group">
 			      <label for="inputEmail1" class="col-lg-1 control-label">Sucursal:</label>
 				    <div class="col-md-2">
@@ -170,15 +171,15 @@
 						<div class="box-body">
 							<table class="table table-bordered table-hover">
 								<tr>
-									<td>Subtotal&nbsp;(S/):</td>
+									<td>Subtotal&nbsp;(<?php echo $sett->coin; ?>):</td>
 									<td><b><input type="text" name="total_igv" readonly="" style="border: transparent; font-weight: bold;"></b></td>
 								</tr>
 								<tr>
-									<td>IGV&nbsp;(18%)(S/):</td>
+									<td>IGV&nbsp;<?php echo "(".$sett->tax."%) ".$sett->coin; ?>:</td>
 									<td><b><input type="text" name="igv" readonly="" style="border: transparent; font-weight: bold;"></b></td>
 								</tr>
 								<tr>
-									<td>Total&nbsp;(S/):</td>
+									<td>Total&nbsp;(<?php echo $sett->coin; ?>):</td>
 									<td><b><input type="text" name="total" readonly="" style="border: transparent; font-weight: bold;"></b></td>
 								</tr>
 							</table>

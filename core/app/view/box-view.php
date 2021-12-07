@@ -45,16 +45,15 @@
 									<td style="text-align: center; width:30px;"><?php echo $number; ?></td> <?php $number++; ?><!--var incremen-->
 									<td style="text-align: center;"><?php $operations = OperationData::getAllProductsBySellId($sell->id);
 										echo count($operations)." Par(es)"; ?></td>
-									<td style="text-align: right;"><?php echo "<b>".number_format($sell->total+$sell->discount,2,".",",")."</b>"; ?></td>
-									<td style="text-align: right;"><?php echo "<b>".number_format($sell->discount,2,".",",")."</b>"; ?></td>
-									<td style="text-align: right;"><?php $total_total += $sell->total;
-										echo "<b>".number_format($sell->total,2,".",",")."</b>";
-										?></td>
+									<td style="text-align: right;"><b><?php echo $sett->coin." ".number_format($sell->total+$sell->discount,2,".",","); ?></b></td>
+									<td style="text-align: right;"><b><?php echo $sett->coin." ".number_format($sell->discount,2,".",","); ?></b></td>
+									<td style="text-align: right;"><b><?php $total_total += $sell->total;
+										echo $sett->coin." ".number_format($sell->total,2,".",",");	?></b></td>
 									<td style="text-align: right;"><?php echo $sell->created_at; ?></td>
 								</tr>
 								<?php endforeach; ?>
 							</table>
-							<h3>Total: <?php echo "S/. ".number_format($total_total,2,".",","); ?></h3>
+							<h3>Total: <?php echo $sett->coin." ".number_format($total_total,2,".",","); ?></h3>
 						</div>
 					</div>
 				</div>

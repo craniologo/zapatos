@@ -47,7 +47,11 @@
 								<tr>
 									<td style="text-align: center; width:30px;"><?php echo $number; ?></td><?php $number++;?>
 									<td style="text-align: right;"><?php echo $prd->barcode; ?></td>
-									<td style="text-align:center;"><?php if($prd->image!=""):?><img src="storage/products/<?php echo $prd->image;?>" style="width:50px; height:50px;"><?php endif;?></td>
+					                <td style="text-align: center;"><?php if($prd->image!=""){ ?>
+					                  <img src="storage/products/<?php echo $prd->image;?>" style="width:50px; height: 50px;" >
+					                  <?php }else{ ?>
+					                  <img src="storage/products/default.jpg" style="width:50px; height: 50px;" >
+					                  <?php } ?></td>
 									<td><?php echo $prd->modelo; ?></td>
 									<td><?php $brand = BrandData::getById($prd->brand_id); echo $brand->name; ?></td>
 									<td><?php echo $prd->sex; ?></td>

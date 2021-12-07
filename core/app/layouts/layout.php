@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>SAVI | SYSHOES</title>
+    <title>SAVI | ZAPATOS</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- Bootstrap 3.3.4 -->
     <link href="plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -43,9 +43,9 @@
       <header class="main-header"><!-- Main Header -->
         <a href="./" class="logo"><!-- Logo -->
           <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini"><b>S</b>C</span>
+          <span class="logo-mini"><b>S</b>Z</span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg">SAVI<b>&nbsp;SYSHOES</b></span>
+          <span class="logo-lg">SAVI<b>&nbsp;ZAPATOS</b></span>
         </a>
         <!-- Header Navbar -->
         <nav class="navbar navbar-static-top" role="navigation">
@@ -155,7 +155,7 @@
             <li class="header">ADMINISTRACION</li>
             <?php if(isset($_SESSION["user_id"])):?>
             <?php if(Core::$user->kind==1):?>
-            <li><a href="./index.php?view=home"><i class='fa fa-dashboard'></i> <span>Resumen</span></a></li>
+            <li><a href="./index.php?view=home"><i class='fa fa-dashboard'></i> <span>Inicio</span></a></li>
             <?php endif; ?>
             <li><a href="./index.php?view=alerts"><i class='fa fa-bell-o'></i> <span>Alertas</span></a></li>
             <li><a href="./index.php?view=sell"><i class='fa fa-shopping-cart'></i> <span>Vender</span></a></li>
@@ -193,7 +193,7 @@
               </ul>
             </li>
             <li class="treeview">
-              <a href="#"><i class='fa fa-bar-chart-o'></i> <span>Gráficas</span> <i class="fa fa-angle-left pull-right"></i></a>
+              <a href="#"><i class='fa fa-bar-chart-o'></i> <span>Estadísticas</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
                 <li><a href="./index.php?view=analytics"><i class='fa fa-bar-chart-o'></i> <span>Analytics</span></a></li>
                 <!-- <li><a href="index.php?view=reports"><i class="fa fa-tags"></i> <span>Marcas</span></a></li>

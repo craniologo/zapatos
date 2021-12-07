@@ -57,7 +57,7 @@
 									<td style="text-align: right;"><?php echo $user->limit_services; ?></td>
 									<td style="text-align: right;"><?php echo $user->created_at; ?></td>
 									<td style="text-align: center;">
-										<a href="index.php?view=user_admin_edit&id=<?php echo $user->id;?>" class="btn btn-warning btn-xs"><i class="fa fa-edit"></i> Editar</a>
+										<a href="index.php?view=user_edit&id=<?php echo $user->id;?>" class="btn btn-warning btn-xs"><i class="fa fa-edit"></i> Editar</a>
 										<a href="index.php?action=user_admin_del&id=<?php echo $user->id;?>" onclick="return confirm('¿Está seguro de eliminar?')" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Eliminar</a>
 									</td>
 								</tr>

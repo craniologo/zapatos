@@ -1,6 +1,7 @@
 <?php
 $u = UserData::getById($_SESSION["user_id"]);
 if($u->kind!=1){ Core::redir("./?view=sell"); }
+$sett = SettingData::getByAdmin($u->admin_id);
 
   $dateB = new DateTime(date('Y-m-d')); 
   $dateA = $dateB->sub(DateInterval::createFromDateString('30 days'));
@@ -33,7 +34,7 @@ for($i=$sd;$i<=$ed;$i+=(60*60*24)){
         <?php if($u->id==1){ ?>
         <h4>Administradores: <?php echo count(UserData::getAllAdmins()); ?></h4>
         <?php } ?>
-        <h3>Empresa: <?php echo SettingData::getByAdmin($u->admin_id)->company; ?></h3>
+        <h3>Empresa: <?php echo $sett->company; ?></h3>
         <h4><i class="fa fa-building"></i> Sucursal Principal: <?php echo StockData::getPrincipalByAdmin($u->admin_id)->name;  ?></h4>
         <a href="./?view=product_new" class="btn btn-default">Nuevo Producto</a>
         <a href="./?view=inventary&stock=<?php echo StockData::getPrincipal()->id; ?>" class="btn btn-default">Inventario Principal</a>
@@ -86,7 +87,7 @@ for($i=$sd;$i<=$ed;$i+=(60*60*24)){
         <span class="info-box-icon bg-yellow"><i class="fa fa-area-chart"></i></span>
         <div class="info-box-content">
           <span class="info-box-text">Ingresos del Mes</span>
-          <span class="info-box-number">S/ <?php echo number_format($ntot,2,".",",");?></span>
+          <span class="info-box-number"><?php echo $sett->coin." ".number_format($ntot,2,".",",");?></span>
         </div><!-- /.info-box-content -->
       </div><!-- /.info-box -->
     </div><!-- /.col -->
@@ -143,7 +144,7 @@ for($i=$sd;$i<=$ed;$i+=(60*60*24)){
                 data: total,
                 xkey: 'x',
                 ykeys: ['y',],
-                labels: ['S/ ']
+                labels: ['<?php echo $sett->coin; ?>']
               }).on('click', function(i, row){
                 console.log(i, row);
               });

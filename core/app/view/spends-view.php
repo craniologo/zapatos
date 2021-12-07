@@ -1,7 +1,8 @@
 <section class="content">
 	<?php $u=null;
   if(isset($_SESSION["user_id"]) &&$_SESSION["user_id"]!=""):
-  $u = UserData::getById($_SESSION["user_id"]); ?>
+  $u = UserData::getById($_SESSION["user_id"]);
+  $sett = SettingData::getByAdmin($u->admin_id); ?>
 	<div class="row">
 		<div class="col-md-12">
 			<h2><i class="fa fa-coffee"></i> Lista de Gastos</h2>
@@ -29,7 +30,7 @@
 								<thead>
 									<th style="text-align: center; width: 30px;">N°</th>
 									<th style="text-align: center;">Concepto</th>
-									<th style="text-align: center;">Monto</th>
+									<th style="text-align: center;">Monto&nbsp;<?php echo $sett->coin; ?></th>
 									<th style="text-align: center;">Fecha</th>
 									<?php if($u->id==$u->admin_id): ?><th style="text-align: center;">Usuario</th><?php endif; ?>
 									<?php if($u->id==1): ?><th style="text-align: center;">Administrador</th><?php endif; ?>
@@ -42,7 +43,7 @@
 								<tr>
 									<td style="text-align: center;"><?php echo $number; ?></td> <?php $number++; ?><!--var incremen-->
 									<td><?php echo $spend->name; ?></td>
-									<td style="text-align: right;">S/ <?php echo number_format($spend->price,2,".",","); ?></td>
+									<td style="text-align: right;"><b><?php echo $sett->coin." ".number_format($spend->price,2,".",","); ?></b></td>
 									<td style="text-align: right;"><?php echo $spend->created_at; ?></td>
 									<?php if($u->id==$u->admin_id): ?><td><?php echo $user->name." ".$user->lastname; ?></td><?php endif; ?>
 									<?php if($u->id==1): ?><td><?php echo $admin->name." ".$admin->lastname; ?></td><?php endif; ?>
@@ -52,7 +53,7 @@
 									<?php $total+=$spend->price;	} ?>
 								</tr>
 							</table>
-							<h3>Gasto Total : S/ <?php echo number_format($total,2,".",",")?></h3>
+							<h3>Gasto Total : <?php echo $sett->coin." ".number_format($total,2,".",",")?></h3>
 						</div>
 					</div>
 				</div>

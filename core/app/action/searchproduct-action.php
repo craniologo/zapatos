@@ -1,7 +1,8 @@
 <section class="content">
 	<?php $u=null;
   	if(isset($_SESSION["user_id"]) &&$_SESSION["user_id"]!=""):
-  	$u = UserData::getById($_SESSION["user_id"]); ?>
+  	$u = UserData::getById($_SESSION["user_id"]);
+  	$sett = SettingData::getByAdmin($u->admin_id); ?>
 	<?php if(isset($_GET["product"]) && $_GET["product"]!=""):?>
 	<?php $products = ProductData::getLikeByAdmin($_GET["product"],$u->admin_id);
 	if(count($products)>0){ ?>
@@ -20,7 +21,7 @@
 									<th style="text-align: center;">Color</th>
 									<th style="text-align: center; width: 63px;">Talla</th>
 									<th style="text-align: center;">Stock</th>
-									<th style="text-align: center;">Venta&nbsp;S/</th>
+									<th style="text-align: center;">Venta&nbsp;<?php echo $sett->coin; ?></th>
 									<th style="text-align: center; width:100px;">Acción</th>
 								</thead>
 								<?php $products_in_cero=0;
@@ -35,7 +36,7 @@
 									<td><?php $color=ColorData::getById($product->color_id); echo $color->name; ?></td>
 									<td style="text-align: center; width: 63px;"><?php $size = Serie_sizeData::getById($product->size_id); echo $size->size; ?></td>
 									<td style="text-align: right;"><?php echo $q; ?></td>
-									<td style="text-align: right;">S/ <?php echo number_format($product->price_out,2); ?></td>
+									<td style="text-align: right;"><?php echo $sett->coin." ".number_format($product->price_out,2); ?></td>
 									<td style="text-align: center;">
 										<form method="post" action="index.php?view=addtocart">
 											<input type="hidden" name="size_id" value="<?php echo $product->size_id; ?>">

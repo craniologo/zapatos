@@ -32,10 +32,10 @@
 									<td style="text-align: center;">
 										<a href="./index.php?view=sell_one&id=<?php echo $sell->id; ?>" class="btn btn-default btn-xs"><i class="fa fa-arrow-right"></i></a>
 										<?php $operations = OperationData::getAllProductsBySellId($sell->id); ?></td>
-									<td style="text-align: right;"><?php echo "<b>".number_format($sell->total+$sell->discount,2,".",",")."</b>"; ?></td>
-									<td style="text-align: right;"><?php echo "<b>".number_format($sell->discount,2,".",",")."</b>"; ?></td>
-									<td style="text-align: right;"><?php $total_total += $sell->total;
-										echo "<b>".number_format($sell->total,2,".",",")."</b>"; ?></td>
+									<td style="text-align: right;"><b><?php echo $sett->coin." ".number_format($sell->total+$sell->discount,2,".",","); ?></b></td>
+									<td style="text-align: right;"><b><?php echo $sett->coin." ".number_format($sell->discount,2,".",","); ?></b></td>
+									<td style="text-align: right;"><b><?php $total_total += $sell->total;
+										echo $sett->coin." ".number_format($sell->total,2,".",","); ?></b></td>
 									<td style="text-align: right;"><?php echo $sell->created_at; ?></td>
 								</tr>
 								<?php endforeach; ?>

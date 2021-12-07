@@ -1,7 +1,8 @@
 <section class="content">
 	<?php $u=null;
   	if(isset($_SESSION["user_id"]) &&$_SESSION["user_id"]!=""):
-  	$u = UserData::getById($_SESSION["user_id"]); ?>
+  	$u = UserData::getById($_SESSION["user_id"]);
+  	$sett = SettingData::getByAdmin($u->admin_id); ?>
 	<div class="row">
 		<div class="col-md-12">
 			<h2><i class='fa fa-clock-o'></i> Historial de Cortes de Caja</h2>
@@ -14,7 +15,7 @@
 			<?php if($u->id==1){
 				$boxes = BoxData::getAll();
 			}else{
-				$boxes = BoxData::getAllbyAdmin($u->admin_id);
+				$boxes = BoxData::getAllByAdmin($u->admin_id);
 			}
 			$products = SellData::getSellsUnBoxed();
 			if(count($boxes)>0){
@@ -28,7 +29,7 @@
 								<thead>
 									<th style="text-align: center; width: 30px;">N°</th>
 									<th style="text-align: center; width: 30px;">Detalle</th>
-									<th style="text-align: center;">Total</th>
+									<th style="text-align: center;">Total&nbsp;<?php echo $sett->coin; ?></th>
 									<th style="text-align: center;">Fecha</th>
 									<?php if($u->id==1): ?><th style="text-align: center;">Administrador</th><?php endif; ?>
 								</thead>
@@ -39,7 +40,7 @@
 								<tr>
 									<td style="text-align: center;"><?php echo $number; ?></td> <?php $number++; ?><!--var incremen-->
 									<td style="text-align: center;"><a href="./index.php?view=b&id=<?php echo $box->id; ?>" class="btn btn-default btn-xs">#<?php echo $box->ref_id; ?></a></td>
-									<td style="text-align: right;"><?php $total=0;
+									<td style="text-align: right;"><b><?php $total=0;
 										foreach($sells as $sell){
 										$operations = OperationData::getAllProductsBySellId($sell->id);
 											foreach($operations as $operation){
@@ -48,13 +49,13 @@
 											}
 										}
 									$total_total += $total;
-									echo "<b>S/. ".number_format($total,2,".",",")."</b>"; ?></td>
+									echo $sett->coin." ".number_format($total,2,".",","); ?></b></td>
 									<td style="text-align: center;"><?php echo $box->created_at; ?></td>
 									<?php if($u->id==1): ?><td><?php echo $admin->name." ".$admin->lastname; ?></td><?php endif; ?>
 								</tr>
 							<?php endforeach; ?>
 							</table>
-							<h3>Total: <?php echo "S/. ".number_format($total_total,2,".",","); ?></h3>
+							<h3>Total: <?php echo $sett->coin." ".number_format($total_total,2,".",","); ?></h3>
 						</div>
 					</div>
 				</div>

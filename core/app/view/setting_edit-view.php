@@ -7,13 +7,15 @@
       <?php $config = SettingData::getById($_GET["id"]); ?>
       <form class="form-horizontal" method="post" id="setting_update" action="index.php?action=setting_update" role="form" enctype="multipart/form-data">
         <div class="form-group">
-          <label for="inputEmail1" class="col-lg-2 control-label">Logo (300x150px JPG)</label>
+          <label for="inputEmail1" class="col-lg-2 control-label">Logo JPG(300x150px)</label>
           <div class="col-md-6">
               <input type="file" name="image" id="image" placeholder="">
-              <?php if($config->image!=""):?>
               <br>
+              <?php if($config->image!=""){ ?>
               <img src="storage/settings/<?php echo $config->image;?>" class="img-responsive" style="width: 200px; height: 50px; ">
-              <?php endif;?>
+              <?php }else{ ?>
+              <img src="storage/settings/default.jpg" class="img-responsive" style="width: 200px; height: 50px; ">
+            <?php } ?>
           </div>
         </div>
         <div class="form-group">

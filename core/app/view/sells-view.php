@@ -1,7 +1,8 @@
 <section class="content">
 	<?php $u=null;
  	if(isset($_SESSION["user_id"]) &&$_SESSION["user_id"]!=""):
-  	$u = UserData::getById($_SESSION["user_id"]); ?>
+  	$u = UserData::getById($_SESSION["user_id"]);
+  	$sett = SettingData::getByAdmin($u->admin_id); ?>
 	<div class="row">
 		<div class="col-md-12">
 			<h2><i class='fa fa-usd'></i> Lista de Ventas</h2>
@@ -29,9 +30,9 @@
 									<th style="text-align: center; width: 30px;">Boleta</th>
 									<th style="text-align: center;">Cantidad</th>
 									<th style="text-align: center;">Cliente</th>
-									<th style="text-align: center;">Subtotal</th>
-									<th style="text-align: center;">Descuento</th>
-									<th style="text-align: center;">Total&nbsp;S/</th>
+									<th style="text-align: center;">Subtotal&nbsp;<?php echo $sett->coin; ?></th>
+									<th style="text-align: center;">Descuento&nbsp;<?php echo $sett->coin; ?></th>
+									<th style="text-align: center;">Total&nbsp;<?php echo $sett->coin; ?></th>
 									<th style="text-align: center;">Fecha</th>
 									<th style="text-align: center;">Sucursal</th>
 									<?php if($u->id==$u->admin_id): ?><th style="text-align: center;">Usuario</th><?php endif; ?>
@@ -53,10 +54,10 @@
 										<?php if($sell->user_id!=""):
 										$user = $sell->getUser(); ?>
 										<?php endif; ?><?php echo $client->name." ".$client->lastname;?></td>
-									<td style="text-align: right;"><?php echo number_format($sell->total+$sell->discount,2,".",","); ?></td>
-									<td style="text-align: right;"><?php echo number_format($sell->discount,2,".",","); ?></td>
-									<td style="text-align: right;"><?php $total= $sell->total;
-										echo number_format($total,2,".",","); ?></td>
+									<td style="text-align: right;"><b><?php echo $sett->coin." ".number_format($sell->total+$sell->discount,2,".",","); ?></b></td>
+									<td style="text-align: right;"><b><?php echo $sett->coin." ".number_format($sell->discount,2,".",","); ?></b></td>
+									<td style="text-align: right;"><b><?php $total= $sell->total;
+										echo $sett->coin." ".number_format($total,2,".",","); ?></b></td>
 									<td style="text-align: center;"><?php echo $sell->created_at; ?></td>
 									<td><?php $suc = StockData::getById($sell->stock_id); echo $suc->name; ?></td>
 										<?php if($u->id==$u->admin_id): ?><td><?php echo $user->name." ".$user->lastname; ?></td><?php endif; ?>
