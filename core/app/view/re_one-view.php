@@ -1,4 +1,8 @@
 <section class="content">
+	<?php $u=null;
+	if(isset($_SESSION["user_id"]) &&$_SESSION["user_id"]!=""):
+	$u = UserData::getById($_SESSION["user_id"]);
+	$sett = SettingData::getByAdmin($u->admin_id); ?>
 	<div class="row">
 		<div class="col-md-12">
 			<h2><i class="fa fa-refresh"></i> Resumen de Reabastecimiento</h2>
@@ -69,8 +73,8 @@
 									<th style="text-align: center;">Color</th>
 									<th style="text-align: center;">Talla</th>
 									<th style="text-align: center;">Cant</th>
-									<th style="text-align: center;">Costo</th>
-									<th style="text-align: center;">Total</th>
+									<th style="text-align: center;">Costo&nbsp;<?php echo $sett->coin; ?></th>
+									<th style="text-align: center;">Total&nbsp;<?php echo $sett->coin; ?></th>
 								</thead>
 								<?php for($number=0; $number<1; $number++); //variable incremental
 								foreach($operations as $operation){
@@ -82,8 +86,8 @@
 									<td><?php $color = ColorData::getById($product->color_id); echo $color->name; ?></td>
 									<td style="text-align: right;"><?php $size = Serie_sizeData::getById($operation->size_id); echo $size->size; ?></td>
 									<td style="text-align: right;"><?php echo $operation->q ;?></td>
-									<td style="text-align: right;">S/. <?php echo number_format($product->price_in,2,".",",") ;?></td>
-									<td style="text-align: right;"><b>S/. <?php echo number_format($operation->q*$product->price_in,2,".",",");$total+=$operation->q*$product->price_in;?></b></td>
+									<td style="text-align: right;"><?php echo $sett->coin." ".number_format($product->price_in,2,".",",") ;?></td>
+									<td style="text-align: right;"><b><?php echo $sett->coin." ".number_format($operation->q*$product->price_in,2,".",",");$total+=$operation->q*$product->price_in;?></b></td>
 								</tr>
 								<?php
 								}
@@ -93,11 +97,12 @@
 					</div>
 				</div>
 			</div>
-			<h2>Total: S/. <?php echo number_format($total,2,'.',','); ?></h2>
+			<h3>Total: <?php echo $sett->coin." ".number_format($total,2,'.',','); ?></h3>
 			<?php ?>	
 			<?php else:?>
 			501 Internal Error
 			<?php endif; ?><br><br><br><br><br>
 		</div>
 	</div>
+	<?php endif; ?>
 </section>

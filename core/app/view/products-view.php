@@ -1,7 +1,8 @@
 <section class="content"> <!-- Main content -->
 	<?php $u=null;
     if(isset($_SESSION["user_id"]) &&$_SESSION["user_id"]!=""):
-    $u = UserData::getById($_SESSION["user_id"]); ?>
+    $u = UserData::getById($_SESSION["user_id"]);
+    $sett = SettingData::getByAdmin($u->admin_id); ?>
 	<div class="row">
 		<div class="col-md-12">
 			<h2><i class="fa fa-apple"></i> Todos los Productos</h2>
@@ -35,8 +36,8 @@
 									<th style="text-align: center;">Serie</th>
 									<th style="text-align: center;">Talla</th>
 									<th style="text-align: center; width: 30px;">Stock</th>
-									<th style="text-align: center;">Costo</th>
-									<th style="text-align: center;">Venta</th>
+									<th style="text-align: center;">Costo&nbsp;<?php echo $sett->coin; ?></th>
+									<th style="text-align: center;">Venta&nbsp;<?php echo $sett->coin; ?></th>
 									<?php if($u->id==1): ?><th style="text-align: center;">Administrador</th><?php endif; ?>
 									<th style="text-align: center;  width:150px;">Acción</th>
 								</thead>
@@ -59,8 +60,8 @@
 									<td><?php $size = Serie_sizeData::getById($prd->size_id); echo "Serie ".$size->serie_id; ?></td>
 									<td><?php $size = Serie_sizeData::getById($prd->size_id); echo "Talla ".$size->size; ?></td>
 									<td style="text-align: right;"><?php echo $q; ?></td>
-									<td style="text-align: right;">S/ <?php echo number_format($prd->price_in,2); ?></td>
-									<td style="text-align: right;">S/ <?php echo number_format($prd->price_out,2); ?></td>
+									<td style="text-align: right;"><?php echo $sett->coin." ".number_format($prd->price_in,2); ?></td>
+									<td style="text-align: right;"><?php echo $sett->coin." ".number_format($prd->price_out,2); ?></td>
 									<?php if($u->id==1): ?><td><?php echo $admin->name." ".$admin->lastname; ?></td><?php endif; ?>
 									<td style="text-align: center;">
 										<a href="barc.php?id=<?php echo $prd->id; ?>" class="btn btn-default btn-xs" target="_blank" title="Etiquetas"><i class="fa fa-barcode"></i></a>

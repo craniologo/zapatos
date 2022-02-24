@@ -15,7 +15,7 @@
 			<?php if($u->id==1){
 				$providers = PersonData::getProviders();
 			}else{
-				$providers = Persondata::getProvidersByAdmin($u->admin_id);
+				$providers = PersonData::getProvidersByAdmin($u->admin_id);
 			}
 			if(count($providers)>0){ ?> <!-- si hay usuarios -->
 			<div class="box">

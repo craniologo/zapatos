@@ -1,4 +1,8 @@
 <section class="content">
+  	<?php $u=null;
+  	if(isset($_SESSION["user_id"]) &&$_SESSION["user_id"]!=""):
+  	$u = UserData::getById($_SESSION["user_id"]);
+  	$sett = SettingData::getByAdmin($u->admin_id); ?>
 	<div class="row">
 		<div class="col-md-12">
 			<h2><i class="fa fa-usd"></i> Resumen de Venta</h2>
@@ -7,7 +11,6 @@
 			<?php if(isset($_GET["id"]) && $_GET["id"]!=""):?>
 			<?php $sell = SellData::getById($_GET["id"]);
 			$operations = OperationData::getAllProductsBySellId($_GET["id"]);
-			$sett = SettingData::getByAdmin($sell->admin_id);
 			$total = 0; ?>
 
 			<?php if(isset($_COOKIE["selled"])){
@@ -172,4 +175,5 @@
 			</script>
 		</div>
 	</div>
+	<?php endif; ?>
 </section>

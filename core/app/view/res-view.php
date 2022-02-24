@@ -1,7 +1,8 @@
 <section class="content">
   	<?php $u=null;
   	if(isset($_SESSION["user_id"]) &&$_SESSION["user_id"]!=""):
-  	$u = UserData::getById($_SESSION["user_id"]); ?>
+  	$u = UserData::getById($_SESSION["user_id"]);
+  	$sett = SettingData::getByAdmin($u->admin_id); ?>
 	<div class="row">
 		<div class="col-md-12">
 			<h2><i class='fa fa-refresh'></i> Lista de Reabastecimientos</h2>
@@ -28,7 +29,7 @@
 									<th style="text-align: center; width:30px;">Boleta</th>
 									<th style="text-align: center;">Cant</th>
 									<th style="text-align: center;">Proveedor</th>
-									<th style="text-align: center;">Total&nbsp;S/</th>
+									<th style="text-align: center;">Total&nbsp;<?php echo $sett->coin; ?></th>
 									<th style="text-align: center;">Fecha</th>
 									<?php if($u->id==$u->admin_id): ?><th style="text-align: center;">Usuario</th><?php endif; ?>
 									<?php if($u->id==1): ?><th style="text-align: center;">Administrador</th><?php endif; ?>
@@ -48,7 +49,7 @@
 										foreach($operations as $operation){
 										$product  = $operation->getProduct();
 										$total += $operation->q*$product->price_in; }; 
-										echo number_format($total,2,".",",")."</b>"; ?></td>
+										echo $sett->coin." ".number_format($total,2,".",",")."</b>"; ?></td>
 									<td style="text-align: right;"><?php echo $sell->created_at; ?></td>
 									<?php if($u->id==$u->admin_id): ?><td><?php echo $user->name." ".$user->lastname; ?></td><?php endif; ?>
 									<?php if($u->id==1): ?><td><?php echo $admin->name." ".$admin->lastname; ?></td><?php endif; ?>

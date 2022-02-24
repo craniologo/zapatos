@@ -8,7 +8,7 @@
     <li><i class="fa fa-list-ul"></i> Catálogos</li>
     <li class="active"><i class="fa fa-list-ol"></i> Lista de Series</li>
   </ol>
-	<p>Aquí están registrados todas las series.</p>
+	<p>Las Series son grupos de tallas para facilitar la carga de productos (calzados) al sistema, por ejemplo la Serie 1 podría contener las tallas 16, 17, 18, 19 y 20.p>
 	<div class="row">
 		<div class="col-md-6">
 			<div class="clearfix"></div>

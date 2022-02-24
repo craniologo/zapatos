@@ -77,8 +77,7 @@
                 </a>
                 <ul class="dropdown-menu">
                   <li class="header">Guías y Manuales</li>
-                  <!--<li class="footer"><a href="https://www.sergestec.com/download/manual_sistema_syshoes.pdf" target="_blank"><i class="fa fa-book"></i> Manual de usuario</a></li>-->
-                  <li><a>Muy pronto aquí!!!</a></li>
+                  <li class="footer"><a href="https://www.sergestec.com/download/manual_sistema_calzado.pdf" target="_blank"><i class="fa fa-book"></i> Manual de usuario</a></li>
                   <li class="header">Sugerencias y Mejoras del Sistema</li>
                   <li class="footer"><a href="http://soporte.sergestec.com" target="_blank"><i class="fa fa-ticket"></i> Ir al sistema de tickets</a></li>
                   <li class="header">Tienes <?php echo count($msgs);?> mensajes nuevos</li>
@@ -240,7 +239,7 @@
         <?php View::load("index");?>
       </div><!-- /.content-wrapper -->
         <footer class="main-footer">
-          <b class="pull-left">Copyright &copy; 2021 <a href="https://www.sergestec.com/" target="_blank">SERGESTEC</a></b>
+          <b class="pull-left">Copyright &copy; 2022 <a href="https://www.sergestec.com/" target="_blank">SERGESTEC</a></b>
         <div style="position: relative; top:-4px; left: 17px;" class="fb-share-button" data-href="https://www.sergestec.com/sistemas-gratuitos-para-mypes/" data-layout="button_count" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.sergestec.com%2Fsistemas-gratuitos-para-mypes%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Compartir</a></div>
         <div class="pull-right hidden-xs">
           <b>Version</b> 8.0

@@ -6,7 +6,8 @@
   }
   $color = ColorData::getById($product->color_id);
   $s_size = Serie_sizeData::getById($product->size_id);
-  $barco = $product->id."".$brand->id."".$sex."".$color->id."".$s_size->id; ?>
+  //$barco = $product->id."".$brand->id."".$sex."".$color->id."".$s_size->id;
+  $barco = $product->barcode; ?>
   <div class="row">
     <div class="col-md-12">
       <h2><i class="fa fa-apple"></i> Editar Producto</h2>

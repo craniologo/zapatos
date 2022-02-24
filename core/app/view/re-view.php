@@ -1,7 +1,8 @@
 <section class="content">
 	<?php $u=null;
 	if(isset($_SESSION["user_id"]) &&$_SESSION["user_id"]!=""):
-	$u = UserData::getById($_SESSION["user_id"]); ?>
+	$u = UserData::getById($_SESSION["user_id"]);
+	$sett = SettingData::getByAdmin($u->admin_id); ?>
 	<div class="row">
 		<div class="col-md-12">
 		<h2><i class="fa fa-refresh"></i> Reabastecer Inventario</h2>
@@ -36,7 +37,7 @@
 									<th style="text-align: center;">Marca</th>
 									<th style="text-align: center;">Género</th>
 									<th style="text-align: center;">Color</th>
-									<th style="text-align: center;">Precio&nbsp;S/</th>
+									<th style="text-align: center;">Precio&nbsp;<?php echo $sett->coin; ?></th>
 									<th style="text-align: center;">Talla</th>
 									<th style="text-align: center;">Stock</th>
 									<th style="text-align: center;">Cantidad</th>
@@ -52,7 +53,7 @@
 									<td><?php $bran = BrandData::getById($product->brand_id); echo $bran->name; ?></td>
 									<td><?php echo $product->sex; ?></td>
 									<td><?php $color = ColorData::getById($product->color_id); echo $color->name; ?></td>
-									<td style="text-align: right;"><b><?php echo number_format($product->price_in,2,".",","); ?></b></td>
+									<td style="text-align: right;"><b><?php echo $sett->coin." ".number_format($product->price_in,2,".",","); ?></b></td>
 									<td style="text-align: right; width: 63px;"><?php $size = Serie_sizeData::getById($product->size_id); echo $size->size; ?></td>
 									<td style="text-align: right;"><?php echo $q; ?></td>
 									<td><input type="hidden" name="size_id" value="<?php echo $product->size_id; ?>">
@@ -113,8 +114,8 @@
 									<th style="text-align: center;">Color</th>
 									<th style="text-align: center;">Talla</th>
 									<th style="text-align: center; width:30px;">Cant</th>
-									<th style="text-align: center; ">P. Unit</th>
-									<th style="text-align: center; width:30px;">Total</th>
+									<th style="text-align: center; ">Unit&nbsp;<?php echo $sett->coin; ?></th>
+									<th style="text-align: center; width:30px;">Total&nbsp;<?php echo $sett->coin; ?></th>
 									<th style="text-align: center; width:30px;">Acción</th>
 								</thead>
 								<?php for($number=0; $number<1; $number++); //variable incremental
@@ -129,8 +130,8 @@
 									<td style="text-align: center;"><?php $color=ColorData::getById($product->color_id); echo $color->name; ?></td>
 									<td style="text-align: center;"><?php $size = Serie_sizeData::getById($p["size_id"]); echo $size->size; ?></td>
 									<td style="text-align: center;" ><?php echo $p["q"]; ?></td>
-									<td style="text-align: right;"><?php echo "S/ ".number_format($product->price_in,2,".",","); ?></td>
-									<td style="text-align: right;"><b>S/.&nbsp;<?php  $pt = $product->price_in*$p["q"]; $total +=$pt; echo number_format($pt,2,".",","); ?></b></td>
+									<td style="text-align: right;"><?php echo $sett->coin." ".number_format($product->price_in,2,".",","); ?></td>
+									<td style="text-align: right;"><b><?php  $pt = $product->price_in*$p["q"]; $total +=$pt; echo $sett->coin." ".number_format($pt,2,".",","); ?></b></td>
 									<td style="text-align: center;"><a href="index.php?view=clearre&product_id=<?php echo $product->id; ?>" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></a></td>
 								</tr>
 								<?php endforeach; ?>
@@ -177,15 +178,15 @@
 							<table class="table table-bordered table-hover">
 								<tr>
 									<td><p>Subtotal</p></td>
-									<td><p><b>S/. <?php echo number_format($total*.82,2,".",","); ?></b></p></td>
+									<td><p><b><?php echo $sett->coin." ".number_format($total*.82,2,".",","); ?></b></p></td>
 								</tr>
 								<tr>
 									<td><p>IGV</p></td>
-									<td><p><b>S/. <?php echo number_format($total*.18,2,".",","); ?></b></p></td>
+									<td><p><b><?php echo $sett->coin." ".number_format($total*.18,2,".",","); ?></b></p></td>
 								</tr>
 								<tr>
 									<td><p>Total</p></td>
-									<td><p><b>S/. <?php echo number_format($total,1,".",","); ?></b></p></td>
+									<td><p><b><?php echo $sett->coin." ".number_format($total,1,".",","); ?></b></p></td>
 								</tr>
 							</table>
 						</div>

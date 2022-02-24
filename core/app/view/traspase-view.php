@@ -3,7 +3,8 @@
   	if(isset($_SESSION["user_id"]) &&$_SESSION["user_id"]!=""):
   	$u = UserData::getById($_SESSION["user_id"]); ?>
 	<?php if(!isset($_SESSION["stock_id"])){ Core::redir("./?view=selectstock"); }
-	$origin = StockData::getById($_SESSION["stock_id"]); ?>
+	$origin = StockData::getById($_SESSION["stock_id"]);
+	$sett = SettingData::getByAdmin($u->admin_id); ?>
 	<div class="row">
 		<div class="col-md-12">
       		<h2><i class="fa fa-exchange"></i> Traspasar Productos</h2>
@@ -37,7 +38,7 @@
 									<th style="text-align: center;">Codigo</th>
 									<th style="text-align: center;">Nombre</th>
 									<th style="text-align: center;">Talla</th>
-									<th style="text-align: center;">Precio unitario</th>
+									<th style="text-align: center;">Precio&nbsp;<?php echo $sett->coin; ?></th>
 									<th style="text-align: center;">En inventario</th>
 									<th style="text-align: center;">Cantidad</th>
 									<th style="text-align: center; width:100px;">Acción</th>
@@ -51,7 +52,7 @@
 									<td style="width:80px;"><?php echo $product->barcode; ?></td>
 									<td><?php echo $product->modelo; ?></td>
 									<td style="text-align: center;"><?php $size = Serie_sizeData::getById($product->size_id); echo $size->size; ?></td>
-									<td style="text-align: right;"><b>S/ <?php echo number_format($product->price_in,2,".",","); ?></b></td>
+									<td style="text-align: right;"><b><?php echo $sett->coin." ".number_format($product->price_in,2,".",","); ?></b></td>
 									<td style="text-align: center;"><?php echo $q; ?></td>
 									<td>
 										<input type="hidden" name="product_id" value="<?php echo $product->id; ?>">
@@ -89,8 +90,8 @@
 									<th style="text-align: center; ">Nombre</th>
 									<th style="text-align: center; width: 30px;">Talla</th>
 									<th style="text-align: center; width: 30px;">Cant</th>
-									<th style="text-align: center; width: 40px;">Precio&nbsp;S/</th>
-									<th style="text-align: center; width: 40px;">Total&nbsp;S/</th>
+									<th style="text-align: center; width: 40px;">Precio&nbsp;<?php echo $sett->coin; ?></th>
+									<th style="text-align: center; width: 40px;">Total&nbsp;<?php echo $sett->coin; ?></th>
 									<th style="text-align: center; width: 60px;">Acción</th>
 								</thead>
 								<?php for($number=0; $number<1; $number++); //variable incremental
@@ -103,8 +104,8 @@
 									<td><?php echo $product->modelo; ?></td>
 									<td style="text-align: center;"><?php $size = Serie_sizeData::getById($product->size_id); echo $size->size; ?></td>
 									<td style="text-align: center;"><?php echo $p["q"]; ?></td>
-									<td><b><?php echo number_format($product->price_in,2,".",","); ?></b></td>
-									<td><b><?php  $pt = $product->price_in*$p["q"]; $total +=$pt; echo number_format($pt,2,".",","); ?></b></td>
+									<td><b><?php echo $sett->coin." ".number_format($product->price_in,2,".",","); ?></b></td>
+									<td><b><?php  $pt = $product->price_in*$p["q"]; $total +=$pt; echo $sett->coin." ".number_format($pt,2,".",","); ?></b></td>
 									<td style=""><a href="index.php?view=cleartraspase&product_id=<?php echo $product->id; ?>" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> Cancelar</a></td>
 
 								</tr>
@@ -144,11 +145,11 @@
 							<table class="table table-bordered">
 								<tr>
 									<td><p>Subtotal</p></td>
-									<td><p><b>S/ <?php echo number_format($total,2,'.',','); ?></b></p></td>
+									<td><p><b><?php echo $sett->coin." ".number_format($total,2,'.',','); ?></b></p></td>
 								</tr>
 								<tr>
 									<td><p>Total</p></td>
-									<td><p><b>S/ <?php echo number_format($total,2,'.',','); ?></b></p></td>
+									<td><p><b><?php echo $sett->coin." ".number_format($total,2,'.',','); ?></b></p></td>
 								</tr>
 							</table>
 						</div>

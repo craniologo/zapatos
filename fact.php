@@ -73,9 +73,9 @@
 	$pdf->setX($lMargin);
 	$pdf->Cell(50,5,'CLIENTE: ',0);
 	$pdf->Cell(45,5,'',0);
-	$pdf->Cell(45,5,'',0);
+	$pdf->Cell(20,5,'',0);
 	$pdf->SetFont('Arial','',10);
-	$pdf->Cell(45,5,utf8_decode($sett->address),0);
+	$pdf->Cell(65,5,utf8_decode($sett->address),0,0,'C');
 	$pdf->Ln(5);
 	$pdf->setX($lMargin);
 	$pdf->Cell(140,5,'Nombre: '.utf8_decode($client->name.' '.$client->lastname),0);

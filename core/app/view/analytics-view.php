@@ -6,7 +6,8 @@
     </style>
 <head>
 <?php $admin = UserData::getById($_SESSION["user_id"]);
-$a = new Database; $connection = $a->connect(); ?>
+$a = new Database; $connection = $a->connect();
+$sett = SettingData::getByAdmin($admin->admin_id); ?>
 <!--inicio de grafico de torta-->
 <script type="text/javascript">
 $(function () {
@@ -70,14 +71,14 @@ $(function () {
             series: {
                 dataLabels: {
                     enabled: true,
-                    format: '{point.name} S/ {point.y:.2f}'
+                    format: '{point.name} <?php echo $sett->coin; ?> {point.y:.2f}'
                 }
             }
         },
 
         tooltip: {
             headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-            pointFormat: '<span style="color:{point.color}">{point.name}</span>: S/ <b>{point.y:.2f}</b> Soles<br/>'
+            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b><?php echo $sett->coin; ?> {point.y:.2f}</b><br/>'
         },
         series: [{
             name: "Usuario",
@@ -138,7 +139,7 @@ $(function () {
 
         tooltip: {
             headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-            pointFormat: '<span style="color:{point.color}">{point.name}</span>: S/ <b>{point.y:.2f}</b><br/>'
+            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b><?php echo $sett->coin; ?> {point.y:.2f}</b><br/>'
         },
 
         series: [{
@@ -322,7 +323,7 @@ $(function () {
         },
         yAxis: {
             title: {
-                text: '<b>Ventas S/</b>'
+                text: '<b>Ventas <?php echo $sett->coin; ?></b>'
             },
             labels: {
                 formatter: function () {
@@ -344,7 +345,7 @@ $(function () {
             }
         },
         series: [{
-            name: 'Ventas S/',
+            name: 'Ventas <?php echo $sett->coin; ?>',
             data: [ <?php if($admin->id==1){
                 $sql = "SELECT created, SUM(total) AS suma FROM sell WHERE operation_type_id=2 GROUP BY created LIMIT 15";
             }else{
